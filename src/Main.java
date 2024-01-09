@@ -71,13 +71,20 @@ public class Main extends JFrame {
 
         button.addActionListener(e -> {
             if (radioButton1.isSelected()) {
-                System.out.println("Radio Button 1 Clicked!");//here we set pageroute to admin login page
+
+                    login1 loginFrame = new login1();
+                    loginFrame.setTitle("Bangladesh Online Voting System - Login");
+                    loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose the login frame on close
+                    loginFrame.setVisible(true);
+                    dispose(); // Close the main frame if needed
+
             } else if (radioButton2.isSelected()) {
-                System.out.println("Radio Button 2 Clicked!");//here we set pageroute to apply login page
+                System.out.println("Radio Button 2 Clicked!");
             } else if (radioButton3.isSelected()) {
-                System.out.println("Radio Button 3 Clicked!");//here we set pageroute to vote login page
+                System.out.println("Radio Button 3 Clicked!");
             }
         });
+
 
         add(button);
     }
