@@ -1,0 +1,104 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+
+public class Main extends JFrame {
+
+    private final JRadioButton radioButton1;
+    private final JRadioButton radioButton2;
+    private final JRadioButton radioButton3;
+
+    public Main() {
+        setLayout(null);
+        setSize(612, 400);
+        setResizable(false);
+        getContentPane().setBackground(new Color(0x007355));
+
+        // Load Bangla font
+        Font banglaFont = loadBanglaFont();
+
+        // Add image
+        ImageIcon imageIcon = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/nirbacon_commison.png");
+        JLabel imageLabel = new JLabel(imageIcon);
+        imageLabel.setBounds(0, 0, 360, 360);
+        add(imageLabel);
+
+        // Add text with radio buttons
+        radioButton1 = addTextWithRadioButton("নির্বাচন কমিশন", 108, banglaFont);
+        radioButton2 = addTextWithRadioButton("আবেদন", 158, banglaFont);
+        radioButton3 = addTextWithRadioButton("ভোটার", 208, banglaFont);
+        addButton(banglaFont);
+    }
+
+    private Font loadBanglaFont() {
+        try {
+            return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.PLAIN, 14);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            return new Font("Nikosh", Font.PLAIN, 20);
+        }
+    }
+
+    private JRadioButton addTextWithRadioButton(String text, int y, Font banglaFont) {
+        JRadioButton radioButton = new JRadioButton(text);
+        radioButton.setBounds(421, y, 200, 24);
+        radioButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
+        radioButton.setBackground(new Color(0x007355));
+        radioButton.setForeground(Color.WHITE);
+
+        radioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == radioButton1) {
+                    radioButton2.setSelected(false);
+                    radioButton3.setSelected(false);
+                } else if (e.getSource() == radioButton2) {
+                    radioButton1.setSelected(false);
+                    radioButton3.setSelected(false);
+                } else if (e.getSource() == radioButton3) {
+                    radioButton1.setSelected(false);
+                    radioButton2.setSelected(false);
+                }
+            }
+        });
+        add(radioButton);
+        return radioButton;
+    }
+
+    private void addButton(Font banglaFont) {
+        JButton button = new JButton("এগিয়ে যান");
+        button.setBounds(410, 260, 132, 44);
+        button.setForeground(Color.BLACK);
+        button.setFont(banglaFont.deriveFont(Font.BOLD, 20));
+        button.setBackground(new Color(0x5FFF95));
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (radioButton1.isSelected()) {
+                    System.out.println("Radio Button 1 Clicked!");//here we set pageroute to admin login page
+                } else if (radioButton2.isSelected()) {
+                    System.out.println("Radio Button 2 Clicked!");//here we set pageroute to apply login page
+                } else if (radioButton3.isSelected()) {
+                    System.out.println("Radio Button 3 Clicked!");//here we set pageroute to vote login page
+                }
+            }
+        });
+
+        add(button);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Main frame = new Main();
+                frame.setTitle("Bangladesh Online Voting System");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setVisible(true);
+            }
+        });
+    }
+}
