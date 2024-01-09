@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.*;
 
 public class Main extends JFrame {
@@ -25,9 +24,9 @@ public class Main extends JFrame {
         add(imageLabel);
 
         // Add text with radio buttons
-        radioButton1 = addTextWithRadioButton("নির্বাচন কমিশন", 108, banglaFont);
-        radioButton2 = addTextWithRadioButton("প্রাথী আবেদন", 158, banglaFont);
-        radioButton3 = addTextWithRadioButton("ভোটার", 208, banglaFont);
+        radioButton1 = addTextWithRadioButton("নির্বাচন কমিশন", 98, banglaFont);
+        radioButton2 = addTextWithRadioButton("প্রাথী আবেদন", 148, banglaFont);
+        radioButton3 = addTextWithRadioButton("ভোটার", 198, banglaFont);
         addButton(banglaFont);
     }
 
@@ -47,19 +46,16 @@ public class Main extends JFrame {
         radioButton.setBackground(new Color(0x007355));
         radioButton.setForeground(Color.WHITE);
 
-        radioButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == radioButton1) {
-                    radioButton2.setSelected(false);
-                    radioButton3.setSelected(false);
-                } else if (e.getSource() == radioButton2) {
-                    radioButton1.setSelected(false);
-                    radioButton3.setSelected(false);
-                } else if (e.getSource() == radioButton3) {
-                    radioButton1.setSelected(false);
-                    radioButton2.setSelected(false);
-                }
+        radioButton.addActionListener(e -> {
+            if (e.getSource() == radioButton1) {
+                radioButton2.setSelected(false);
+                radioButton3.setSelected(false);
+            } else if (e.getSource() == radioButton2) {
+                radioButton1.setSelected(false);
+                radioButton3.setSelected(false);
+            } else if (e.getSource() == radioButton3) {
+                radioButton1.setSelected(false);
+                radioButton2.setSelected(false);
             }
         });
         add(radioButton);
@@ -73,16 +69,13 @@ public class Main extends JFrame {
         button.setFont(banglaFont.deriveFont(Font.BOLD, 20));
         button.setBackground(new Color(0x5FFF95));
 
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (radioButton1.isSelected()) {
-                    System.out.println("Radio Button 1 Clicked!");//here we set pageroute to admin login page
-                } else if (radioButton2.isSelected()) {
-                    System.out.println("Radio Button 2 Clicked!");//here we set pageroute to apply login page
-                } else if (radioButton3.isSelected()) {
-                    System.out.println("Radio Button 3 Clicked!");//here we set pageroute to vote login page
-                }
+        button.addActionListener(e -> {
+            if (radioButton1.isSelected()) {
+                System.out.println("Radio Button 1 Clicked!");//here we set pageroute to admin login page
+            } else if (radioButton2.isSelected()) {
+                System.out.println("Radio Button 2 Clicked!");//here we set pageroute to apply login page
+            } else if (radioButton3.isSelected()) {
+                System.out.println("Radio Button 3 Clicked!");//here we set pageroute to vote login page
             }
         });
 
@@ -90,14 +83,11 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Main frame = new Main();
-                frame.setTitle("Bangladesh Online Voting System");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setVisible(true);
-            }
-        });
+
+            Main frame = new Main();
+            frame.setTitle("Bangladesh Online Voting System");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setVisible(true);
+
     }
 }
