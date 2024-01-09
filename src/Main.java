@@ -73,15 +73,23 @@ public class Main extends JFrame {
             if (radioButton1.isSelected()) {
 
                     login1 loginFrame = new login1();
-                    loginFrame.setTitle("Bangladesh Online Voting System - Login");
-                    loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose the login frame on close
+                    loginFrame.setTitle("Bangladesh Online Voting System - Login1");
+                    loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     loginFrame.setVisible(true);
-                    dispose(); // Close the main frame if needed
+                    dispose();
 
             } else if (radioButton2.isSelected()) {
-                System.out.println("Radio Button 2 Clicked!");
+                login2 loginFrame = new login2();
+                loginFrame.setTitle("Bangladesh Online Voting System - Login2");
+                loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                loginFrame.setVisible(true);
+                dispose();
             } else if (radioButton3.isSelected()) {
-                System.out.println("Radio Button 3 Clicked!");
+                login3 loginFrame = new login3();
+                loginFrame.setTitle("Bangladesh Online Voting System - Login3");
+                loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                loginFrame.setVisible(true);
+                dispose();
             }
         });
 

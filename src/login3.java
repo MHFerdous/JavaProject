@@ -5,9 +5,9 @@ import java.awt.event.FocusEvent;
 import java.io.File;
 import java.io.IOException;
 
-public class login1 extends JFrame {
+public class login3 extends JFrame {
 
-    public login1() {
+    public login3() {
         setLayout(null);
         setSize(612, 400);
         setResizable(false);
@@ -22,8 +22,9 @@ public class login1 extends JFrame {
         Font banglaFont = loadBanglaFont(); // Load Bangla font
         addTextFields(banglaFont); // Add text fields
         // Add buttons
-        AddLogButton1(banglaFont);
-        HomeButton();
+        AddLogButton3(banglaFont);
+        HomeButton3();
+        AddSignupButton2(banglaFont);
 
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -33,14 +34,14 @@ public class login1 extends JFrame {
         // Request focus for the main panel to start without initial selection
         getContentPane().requestFocusInWindow();
     }
-    private void HomeButton() {
-        JButton homeButton = new JButton(new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/home-icon.jpg"));
-        homeButton.setBounds(314, 10, 20, 20);
-        homeButton.setBorderPainted(false);
-        homeButton.setContentAreaFilled(false);
-        homeButton.setFocusPainted(false);
+    private void HomeButton3() {
+        JButton homeButton3 = new JButton(new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/home-icon.jpg"));
+        homeButton3.setBounds(314, 10, 20, 20);
+        homeButton3.setBorderPainted(false);
+        homeButton3.setContentAreaFilled(false);
+        homeButton3.setFocusPainted(false);
 
-        homeButton.addActionListener(e -> {
+        homeButton3.addActionListener(e -> {
             Main loginFrame = new Main();
             loginFrame.setTitle("Bangladesh Online Voting System");
             loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -48,8 +49,9 @@ public class login1 extends JFrame {
             dispose();
         });
 
-        add(homeButton);
+        add(homeButton3);
     }
+
     private Font loadBanglaFont() {
         try {
             return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.PLAIN, 14);
@@ -72,6 +74,9 @@ public class login1 extends JFrame {
         textField1.setBounds(340, 131, 227, 37);
         textField1.setBackground(new Color(0xD9D9D9));
         add(textField1);
+
+        // Set hint text for the first text field
+
         textField1.setForeground(Color.GRAY);
 
         // Second text field
@@ -113,14 +118,14 @@ public class login1 extends JFrame {
     }
 
     private void setHintText(JTextField textField, Font font) {
-        textField.setText("নির্বাচন কমিশন আই ডি নাম্বার");
+        textField.setText("এন আই ডি নাম্বার");
         textField.setForeground(Color.GRAY);
         textField.setFont(font);
 
         textField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (textField.getText().equals("নির্বাচন কমিশন আই ডি নাম্বার")) {
+                if (textField.getText().equals("এন আই ডি নাম্বার")) {
                     textField.setText("");
                     textField.setForeground(Color.BLACK);
                 }
@@ -129,26 +134,40 @@ public class login1 extends JFrame {
             @Override
             public void focusLost(FocusEvent e) {
                 if (textField.getText().isEmpty()) {
-                    textField.setText("নির্বাচন কমিশন আই ডি নাম্বার");
+                    textField.setText("এন আই ডি নাম্বার");
                     textField.setForeground(Color.GRAY);
                 }
             }
         });
     }
 
-    private void AddLogButton1(Font banglaFont) {
-        JButton LogButton1 = new JButton("প্রবেশ করুন");
-        LogButton1.setBounds(385, 260, 132, 44);
-        LogButton1.setForeground(Color.BLACK);
-        LogButton1.setFont(banglaFont.deriveFont(Font.BOLD, 20));
-        LogButton1.setBackground(new Color(0x5FFF95));
+    private void AddLogButton3(Font banglaFont) {
+        JButton button = new JButton("প্রবেশ করুন");
+        button.setBounds(385, 260, 132, 44);
+        button.setForeground(Color.BLACK);
+        button.setFont(banglaFont.deriveFont(Font.BOLD, 20));
+        button.setBackground(new Color(0x5FFF95));
 
-        LogButton1.addActionListener(e -> {
+        button.addActionListener(e -> {
             // Send data to Firebase using textField1.getText() and passwordField.getPassword()
             System.out.println("Data sent to Firebase");
         });
 
-        add(LogButton1);
+        add(button);
+    }
+    private void AddSignupButton2(Font banglaFont) {
+        JButton SignupButton2 = new JButton("নিবন্ধন করুন");
+        SignupButton2.setBounds(490, 10, 92, 34);
+        SignupButton2.setForeground(Color.BLACK);
+        SignupButton2.setFont(banglaFont.deriveFont(Font.BOLD, 16));
+        SignupButton2.setBackground(new Color(0xFFFFFF));
+
+        SignupButton2.addActionListener(e -> {
+            // go to reg2
+            System.out.println("reg3");
+        });
+
+        add(SignupButton2);
     }
 
     private void formMouseClicked() {
@@ -156,9 +175,9 @@ public class login1 extends JFrame {
     }
 
     public static void main(String[] args) {
-            login1 frame = new login1();
-            frame.setTitle("");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setVisible(true);
+        login3 frame = new login3();
+        frame.setTitle("");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 }
