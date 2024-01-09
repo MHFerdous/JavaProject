@@ -1,9 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.*;
+import java.io.*;
 
 public class Main extends JFrame {
 
@@ -23,12 +21,12 @@ public class Main extends JFrame {
         // Add image
         ImageIcon imageIcon = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/nirbacon_commison.png");
         JLabel imageLabel = new JLabel(imageIcon);
-        imageLabel.setBounds(0, 0, 360, 360);
+        imageLabel.setBounds(0, 0, 306, 360);
         add(imageLabel);
 
         // Add text with radio buttons
         radioButton1 = addTextWithRadioButton("নির্বাচন কমিশন", 108, banglaFont);
-        radioButton2 = addTextWithRadioButton("আবেদন", 158, banglaFont);
+        radioButton2 = addTextWithRadioButton("প্রাথী আবেদন", 158, banglaFont);
         radioButton3 = addTextWithRadioButton("ভোটার", 208, banglaFont);
         addButton(banglaFont);
     }
@@ -44,7 +42,7 @@ public class Main extends JFrame {
 
     private JRadioButton addTextWithRadioButton(String text, int y, Font banglaFont) {
         JRadioButton radioButton = new JRadioButton(text);
-        radioButton.setBounds(421, y, 200, 24);
+        radioButton.setBounds(397, y, 200, 24);
         radioButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
         radioButton.setBackground(new Color(0x007355));
         radioButton.setForeground(Color.WHITE);
@@ -70,10 +68,11 @@ public class Main extends JFrame {
 
     private void addButton(Font banglaFont) {
         JButton button = new JButton("এগিয়ে যান");
-        button.setBounds(410, 260, 132, 44);
+        button.setBounds(390, 260, 132, 44);
         button.setForeground(Color.BLACK);
         button.setFont(banglaFont.deriveFont(Font.BOLD, 20));
         button.setBackground(new Color(0x5FFF95));
+
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
