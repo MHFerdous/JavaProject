@@ -6,7 +6,7 @@ public class Main extends JFrame {
 
     private final JRadioButton radioButton1;
     private final JRadioButton radioButton2;
-    private final JRadioButton radioButton3;
+
 
     public Main() {
         setLayout(null);
@@ -24,9 +24,8 @@ public class Main extends JFrame {
         add(imageLabel);
 
         // Add text with radio buttons
-        radioButton1 = addTextWithRadioButton("নির্বাচন কমিশন", 98, banglaFont);
-        radioButton2 = addTextWithRadioButton("প্রাথী আবেদন", 148, banglaFont);
-        radioButton3 = addTextWithRadioButton("ভোটার", 198, banglaFont);
+        radioButton1 = addTextWithRadioButton("নির্বাচন কমিশন", 127, banglaFont);
+        radioButton2 = addTextWithRadioButton("ভোটার", 178, banglaFont);
         addButton(banglaFont);
     }
 
@@ -41,7 +40,7 @@ public class Main extends JFrame {
 
     private JRadioButton addTextWithRadioButton(String text, int y, Font banglaFont) {
         JRadioButton radioButton = new JRadioButton(text);
-        radioButton.setBounds(397, y, 200, 24);
+        radioButton.setBounds(393, y, 200, 24);
         radioButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
         radioButton.setBackground(new Color(0x007355));
         radioButton.setForeground(Color.WHITE);
@@ -49,13 +48,8 @@ public class Main extends JFrame {
         radioButton.addActionListener(e -> {
             if (e.getSource() == radioButton1) {
                 radioButton2.setSelected(false);
-                radioButton3.setSelected(false);
             } else if (e.getSource() == radioButton2) {
                 radioButton1.setSelected(false);
-                radioButton3.setSelected(false);
-            } else if (e.getSource() == radioButton3) {
-                radioButton1.setSelected(false);
-                radioButton2.setSelected(false);
             }
         });
         add(radioButton);
@@ -64,7 +58,7 @@ public class Main extends JFrame {
 
     private void addButton(Font banglaFont) {
         JButton button = new JButton("এগিয়ে যান");
-        button.setBounds(390, 260, 132, 44);
+        button.setBounds(398, 240, 132, 44);
         button.setForeground(Color.BLACK);
         button.setFont(banglaFont.deriveFont(Font.BOLD, 20));
         button.setBackground(new Color(0x5FFF95));
@@ -73,20 +67,14 @@ public class Main extends JFrame {
             if (radioButton1.isSelected()) {
 
                     login1 loginFrame = new login1();
-                    loginFrame.setTitle("Bangladesh Online Voting System - Login1");
+                    loginFrame.setTitle("Bangladesh Online Voting System - Bangladesh Nirbacon Commission");
                     loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     loginFrame.setVisible(true);
                     dispose();
 
             } else if (radioButton2.isSelected()) {
                 login2 loginFrame = new login2();
-                loginFrame.setTitle("Bangladesh Online Voting System - Login2");
-                loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                loginFrame.setVisible(true);
-                dispose();
-            } else if (radioButton3.isSelected()) {
-                login3 loginFrame = new login3();
-                loginFrame.setTitle("Bangladesh Online Voting System - Login3");
+                loginFrame.setTitle("Bangladesh Online Voting System - Voter Login Page");
                 loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 loginFrame.setVisible(true);
                 dispose();
