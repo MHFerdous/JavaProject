@@ -42,10 +42,11 @@ public class login2 extends JFrame {
         homeButton2.setFocusPainted(false);
 
         homeButton2.addActionListener(e -> {
-            Main loginFrame = new Main();
-            loginFrame.setTitle("Bangladesh Online Voting System");
-            loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            loginFrame.setVisible(true);
+            Main mainFrame = new Main();
+            mainFrame.setTitle("Bangladesh Online Voting System");
+            mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            mainFrame.setLocationRelativeTo(null); //window open in center
+            mainFrame.setVisible(true);
             dispose();
         });
 
@@ -176,8 +177,10 @@ public class login2 extends JFrame {
 
     public static void main(String[] args) {
         login2 frame = new login2();
-        frame.setTitle("");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        //if you want to check just this page then remove below code comment otherwish it was call from main page
+//            frame.setTitle("");
+//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            frame.setLocationRelativeTo(null); //window open in center
+//            frame.setVisible(true);
     }
 }

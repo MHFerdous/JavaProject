@@ -69,6 +69,7 @@ public class Main extends JFrame {
                     login1 loginFrame = new login1();
                     loginFrame.setTitle("Bangladesh Online Voting System - Bangladesh Nirbacon Commission");
                     loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    loginFrame.setLocationRelativeTo(null); //window open in center
                     loginFrame.setVisible(true);
                     dispose();
 
@@ -76,6 +77,7 @@ public class Main extends JFrame {
                 login2 loginFrame = new login2();
                 loginFrame.setTitle("Bangladesh Online Voting System - Voter Login Page");
                 loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                loginFrame.setLocationRelativeTo(null); //window open in center
                 loginFrame.setVisible(true);
                 dispose();
             }
@@ -90,6 +92,7 @@ public class Main extends JFrame {
             Main frame = new Main();
             frame.setTitle("Bangladesh Online Voting System");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setLocationRelativeTo(null); //window open in center
             frame.setVisible(true);
 
     }
