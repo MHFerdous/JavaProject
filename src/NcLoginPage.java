@@ -1,5 +1,3 @@
-import com.mongodb.client.*;
-import org.bson.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -7,7 +5,6 @@ import java.io.*;
 
 public class NcLoginPage extends JFrame {
 
-    private JTextField IdField;
     private JPasswordField passwordField;
 
     public NcLoginPage() {
@@ -64,12 +61,12 @@ public class NcLoginPage extends JFrame {
 
     private void addTextFields(Font banglaFont) {
         // ID text field
-        IdField = new JTextField();
-        IdHintText(IdField, banglaFont);
-        IdField.setBounds(340, 131, 227, 37);
-        IdField.setBackground(new Color(0xD9D9D9));
-        add(IdField);
-        IdField.setForeground(Color.GRAY);
+        JTextField idField = new JTextField();
+        IdHintText(idField, banglaFont);
+        idField.setBounds(340, 131, 227, 37);
+        idField.setBackground(new Color(0xD9D9D9));
+        add(idField);
+        idField.setForeground(Color.GRAY);
 
         // Password text field
         passwordField = new JPasswordField();
@@ -130,33 +127,6 @@ public class NcLoginPage extends JFrame {
         NcLoginButton.setForeground(Color.BLACK);
         NcLoginButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
         NcLoginButton.setBackground(new Color(0x5FFF95));
-
-        NcLoginButton.addActionListener(e -> { // Connect to MongoDB and compare data
-            
-            String mongodbUrl = "mongodb+srv://jawad:jawad123456789@mydb.k3lidbr.mongodb.net/";
-            String databaseName = "Nirbacon_Commission";
-            String collectionName = "NirbaconCommission";
-
-            try (MongoClient mongoClient = MongoClients.create(mongodbUrl)) {
-                MongoDatabase database = mongoClient.getDatabase(databaseName);
-                MongoCollection<Document> collection = database.getCollection(collectionName);
-
-                // Create a filter to match the data
-                Document filter = new Document("field1", IdField.getText())
-                        .append("field2", String.valueOf(passwordField.getPassword()));
-                
-                Document result = collection.find(filter).first(); // Find the document in the collection
-
-                if (result != null) { // If Match found, it will show login success dialog box
-                    JOptionPane.showMessageDialog(this, "Login Successful", "Success", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(this, "Invalid Input", "Mismatched", JOptionPane.ERROR_MESSAGE);
-                }
-
-            } catch (Exception error) {
-                error.printStackTrace();
-            }
-        });
 
         add(NcLoginButton);
     }
