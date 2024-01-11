@@ -10,10 +10,10 @@ public class VoterLoginPage extends JFrame {
         setLayout(null);
         setSize(612, 400);
         setResizable(false);
-        setTitle("Bangladesh Online Voting System - Voter Login Page");
+        setTitle("ভোটার একাউন্ট");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null); //window open in center
-        setVisible(true);
+        setVisible(true);//comment this line if you want to run just this page
         getContentPane().setBackground(new Color(0x007355));
 
         // Add image
@@ -127,7 +127,8 @@ public class VoterLoginPage extends JFrame {
         VoterLoginButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
         VoterLoginButton.setBackground(new Color(0x5FFF95));
         VoterLoginButton.addActionListener(e -> {
-            System.out.println("Data sent to Firebase"); // Send data to Firebase using IdField.getText() and passwordField.getPassword()
+            new VotingPage();
+            dispose();
         });
         add(VoterLoginButton);
     }
@@ -138,11 +139,16 @@ public class VoterLoginPage extends JFrame {
         VoterSignupButton.setFont(banglaFont.deriveFont(Font.BOLD, 16));
         VoterSignupButton.setBackground(new Color(0xFFFFFF));
         VoterSignupButton.addActionListener(e -> {
-            System.out.println("reg2"); // Add database
+            new VoterSignup();
+            dispose();
         });
         add(VoterSignupButton);
     }
     public static void main(String[] args) {
-        new VoterLoginPage();
+        new VoterLoginPage();//add comment this and above setVisible(true); line - if below line is active
+
+        //To run this page remove comment
+//        VoterLoginPage frame = new VoterLoginPage();
+//        frame.setVisible(true);
     }
 }

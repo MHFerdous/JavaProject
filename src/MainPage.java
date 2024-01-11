@@ -11,7 +11,7 @@ public class MainPage extends JFrame {
         setLayout(null);
         setSize(612, 400);
         setResizable(false);
-        setTitle("Bangladesh Online Voting System");
+        setTitle("বাংলাদেশ অনলাইন ভোটিং সিস্টেম");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null); // window open in center
         getContentPane().setBackground(new Color(0x007355));

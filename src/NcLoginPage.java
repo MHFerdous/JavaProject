@@ -14,7 +14,7 @@ public class NcLoginPage extends JFrame {
         setLayout(null);
         setSize(612, 400);
         setResizable(false);
-        setTitle("Bangladesh Online Voting System - Bangladesh Nirbacon Commission");
+        setTitle("বাংলাদেশ নির্বাচন কমিশন");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null); //window open in center
         setVisible(true);
@@ -162,6 +162,10 @@ public class NcLoginPage extends JFrame {
     }
 
     public static void main(String[] args) {
-        new NcLoginPage();
+        new NcLoginPage();//add comment this and above setVisible(true); line - if below line is active
+
+        //To run this page remove comment
+//        NcLoginPage frame = new NcLoginPage();
+//        frame.setVisible(true);
     }
 }
