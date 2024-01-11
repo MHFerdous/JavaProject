@@ -79,10 +79,10 @@ public class NcLoginPage extends JFrame {
         idField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                String PATTERN = "[০-৯]";
+                String PATTERN = "[০-৯]+";
                 Pattern check = Pattern.compile(PATTERN);
                 Matcher matcher = check.matcher(idField.getText());
-                if (!matcher.find()) {
+                if (!matcher.matches()) {
                     idFieldValidation.setText("বাংলায় সংখ্যা লিখুন");
                     idFieldValidation.setFont(banglaFont.deriveFont(Font.BOLD, 16));
                 } else {

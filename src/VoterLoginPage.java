@@ -75,10 +75,10 @@ public class VoterLoginPage extends JFrame {
         NidField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                String PATTERN = "[০-৯]";
+                String PATTERN = "[০-৯]+";
                 Pattern check = Pattern.compile(PATTERN);
                 Matcher matcher = check.matcher(NidField.getText());
-                if (!matcher.find()) {
+                if (!matcher.matches()) {
                     NidFieldValidation.setText("বাংলায় সংখ্যা লিখুন");
                     NidFieldValidation.setFont(banglaFont.deriveFont(Font.BOLD, 16));
                 } else {
