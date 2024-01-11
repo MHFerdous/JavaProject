@@ -25,7 +25,6 @@ public class VotingPage extends JFrame {
         try {
             return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.PLAIN, 14);
         } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
             return new Font("Arial", Font.PLAIN, 14); // Fallback to a default font
         }
     }

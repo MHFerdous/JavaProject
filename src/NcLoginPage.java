@@ -2,10 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class NcLoginPage extends JFrame {
 
     private JPasswordField passwordField;
+    private JTextField idField;
+    private JLabel idFieldValidation;
 
     public NcLoginPage() {
         setLayout(null);
@@ -53,20 +57,39 @@ public class NcLoginPage extends JFrame {
 
     private Font loadBanglaFont() {
         try {
-            return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.BOLD, 14);
+            return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.PLAIN, 17);
         } catch (FontFormatException | IOException e) {
-            return new Font("Arial", Font.PLAIN, 14); // Fallback to a default font
+            return new Font("Arial", Font.PLAIN, 18); // Fallback to a default font
         }
     }
 
     private void addTextFields(Font banglaFont) {
         // ID text field
-        JTextField idField = new JTextField();
+        idField = new JTextField();
         IdHintText(idField, banglaFont);
         idField.setBounds(340, 131, 227, 37);
         idField.setBackground(new Color(0xD9D9D9));
         add(idField);
         idField.setForeground(Color.GRAY);
+
+        idFieldValidation = new JLabel();
+        idFieldValidation.setBounds(340, 98, 227, 37);
+        add(idFieldValidation);
+        idFieldValidation.setForeground(Color.white);
+        idField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String PATTERN = "[০-৯]";
+                Pattern check = Pattern.compile(PATTERN);
+                Matcher matcher = check.matcher(idField.getText());
+                if (!matcher.find()) {
+                    idFieldValidation.setText("বাংলায় সংখ্যা লিখুন");
+                    idFieldValidation.setFont(banglaFont.deriveFont(Font.BOLD, 16));
+                } else {
+                    idFieldValidation.setText(null);
+                }
+            }
+        });
 
         // Password text field
         passwordField = new JPasswordField();
@@ -77,47 +100,53 @@ public class NcLoginPage extends JFrame {
         passwordField.addFocusListener(new FocusAdapter() { // show and hide password hintText
             @Override
             public void focusGained(FocusEvent e) {
-                if (String.valueOf(passwordField.getPassword()).equals("পাসওয়ার্ড")) {
+                if (String.valueOf(passwordField.getPassword()).equals("পাসওয়ার্ড দিন")) {
                     passwordField.setText("");
                     passwordField.setEchoChar('*');
-                    passwordField.setForeground(Color.gray);
+                    passwordField.setForeground(Color.BLACK);
+                    passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
                 }
             }
             @Override
             public void focusLost(FocusEvent e) {
                 if (String.valueOf(passwordField.getPassword()).isEmpty()) {
-                    passwordField.setText("পাসওয়ার্ড");
+                    passwordField.setText("পাসওয়ার্ড দিন");
                     passwordField.setEchoChar((char) 0);
-                    passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 14));
+                    passwordField.setForeground(Color.gray);
+                    passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
+
                 }
             }
         });
     }
+
     private void IdHintText(JTextField textField, Font font) {
-        textField.setText("নির্বাচন কমিশন আই ডি নাম্বার");
+        textField.setText("নির্বাচন কমিশন আই ডি নাম্বার দিন");
         textField.setForeground(Color.GRAY);
         textField.setFont(font);
         textField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (textField.getText().equals("নির্বাচন কমিশন আই ডি নাম্বার")) {
+                if (textField.getText().equals("নির্বাচন কমিশন আই ডি নাম্বার দিন")) {
                     textField.setText("");
-                    textField.setForeground(Color.GRAY);
+                    textField.setForeground(Color.BLACK);
+                    textField.setFont(font.deriveFont(Font.PLAIN, 17));
                 }
             }
             @Override
             public void focusLost(FocusEvent e) {
                 if (textField.getText().isEmpty()) {
-                    textField.setText("নির্বাচন কমিশন আই ডি নাম্বার");
+                    textField.setText("নির্বাচন কমিশন আই ডি নাম্বার দিন");
                     textField.setForeground(Color.GRAY);
+                    passwordField.setFont(font.deriveFont(Font.PLAIN, 17));
                 }
             }
         });
     }
     private void PasswordHintText(JPasswordField passwordField, Font font) {
-        passwordField.setText("পাসওয়ার্ড");
+        passwordField.setText("পাসওয়ার্ড দিন");
         passwordField.setForeground(Color.GRAY);
-        passwordField.setFont(font.deriveFont(Font.PLAIN, 14));
+        passwordField.setFont(font.deriveFont(Font.PLAIN, 17));
         passwordField.setEchoChar((char) 0);
     }
 

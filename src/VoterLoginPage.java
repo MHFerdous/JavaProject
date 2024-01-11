@@ -2,10 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class VoterLoginPage extends JFrame {
-    private JTextField IdField;
     private JPasswordField passwordField;
+    private JLabel NidFieldValidation;
     public VoterLoginPage() {
         setLayout(null);
         setSize(612, 400);
@@ -51,20 +53,39 @@ public class VoterLoginPage extends JFrame {
 
     private Font loadBanglaFont() {
         try {
-            return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.BOLD, 14);
+            return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.PLAIN, 17);
         } catch (FontFormatException | IOException e) {
-            return new Font("Arial", Font.PLAIN, 14); // Fallback to a default font
+            return new Font("Arial", Font.PLAIN, 18); // Fallback to a default font
         }
     }
 
     private void addTextFields(Font banglaFont) {
         // First text field
-        IdField = new JTextField();
-        IdHintText(IdField, banglaFont);
-        IdField.setBounds(340, 131, 227, 37);
-        IdField.setBackground(new Color(0xD9D9D9));
-        add(IdField);
-        IdField.setForeground(Color.GRAY);
+        JTextField NidField = new JTextField();
+        IdHintText(NidField, banglaFont);
+        NidField.setBounds(340, 131, 227, 37);
+        NidField.setBackground(new Color(0xD9D9D9));
+        add(NidField);
+        NidField.setForeground(Color.GRAY);
+
+        NidFieldValidation = new JLabel();
+        NidFieldValidation.setBounds(340, 98, 227, 37);
+        add(NidFieldValidation);
+        NidFieldValidation.setForeground(Color.white);
+        NidField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String PATTERN = "[০-৯]";
+                Pattern check = Pattern.compile(PATTERN);
+                Matcher matcher = check.matcher(NidField.getText());
+                if (!matcher.find()) {
+                    NidFieldValidation.setText("বাংলায় সংখ্যা লিখুন");
+                    NidFieldValidation.setFont(banglaFont.deriveFont(Font.BOLD, 16));
+                } else {
+                    NidFieldValidation.setText(null);
+                }
+            }
+        });
 
         // Password text field
         passwordField = new JPasswordField();
@@ -75,49 +96,53 @@ public class VoterLoginPage extends JFrame {
         passwordField.addFocusListener(new FocusAdapter() { // show and hide password hintText
             @Override
             public void focusGained(FocusEvent e) {
-                if (String.valueOf(passwordField.getPassword()).equals("পাসওয়ার্ড")) {
+                if (String.valueOf(passwordField.getPassword()).equals("পাসওয়ার্ড দিন")) {
                     passwordField.setText("");
                     passwordField.setEchoChar('*');
-                    passwordField.setForeground(Color.gray);
+                    passwordField.setForeground(Color.BLACK);
+                    passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
                 }
             }
             @Override
             public void focusLost(FocusEvent e) {
                 if (String.valueOf(passwordField.getPassword()).isEmpty()) {
-                    passwordField.setText("পাসওয়ার্ড");
+                    passwordField.setText("পাসওয়ার্ড দিন");
                     passwordField.setEchoChar((char) 0);
-                    passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 14));
+                    passwordField.setForeground(Color.GRAY);
+                    passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
                 }
             }
         });
     }
 
     private void IdHintText(JTextField textField, Font font) {
-        textField.setText("এন আই ডি নাম্বার");
+        textField.setText("এন আই ডি নাম্বার দিন");
         textField.setForeground(Color.GRAY);
         textField.setFont(font);
 
         textField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (textField.getText().equals("এন আই ডি নাম্বার")) {
+                if (textField.getText().equals("এন আই ডি নাম্বার দিন")) {
                     textField.setText("");
-                    textField.setForeground(Color.GRAY);
+                    textField.setForeground(Color.BLACK);
+                    passwordField.setFont(font.deriveFont(Font.PLAIN, 17));
                 }
             }
             @Override
             public void focusLost(FocusEvent e) {
                 if (textField.getText().isEmpty()) {
-                    textField.setText("এন আই ডি নাম্বার");
+                    textField.setText("এন আই ডি নাম্বার দিন");
                     textField.setForeground(Color.GRAY);
+                    passwordField.setFont(font.deriveFont(Font.PLAIN, 17));
                 }
             }
         });
     }
     private void PasswordHintText(JPasswordField passwordField, Font font) {
-        passwordField.setText("পাসওয়ার্ড");
+        passwordField.setText("পাসওয়ার্ড দিন");
         passwordField.setForeground(Color.GRAY);
-        passwordField.setFont(font.deriveFont(Font.PLAIN, 14));
+        passwordField.setFont(font.deriveFont(Font.PLAIN, 17));
         passwordField.setEchoChar((char) 0);
     }
     private void VoterLoginButton(Font banglaFont) {

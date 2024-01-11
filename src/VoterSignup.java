@@ -9,7 +9,7 @@ public class VoterSignup extends JFrame {
         setSize(612, 400);
         setTitle("ভোটার নিবন্ধন");
         setLocationRelativeTo(null);
-        setVisible(true);
+        //setVisible(true);
         setResizable(false);
         getContentPane().setBackground(new Color(0x007355));
         setLayout(null);
@@ -197,10 +197,10 @@ public class VoterSignup extends JFrame {
         });
     }
     public static void main(String[] args) {
-        new VoterSignup();//add comment this and above setVisible(true); line - if below line is active
+        //new VoterSignup();//add comment this and above setVisible(true); line - if below line is active
 
         //To run this page remove comment
-//        VoterSignup frame = new VoterSignup();
-//        frame.setVisible(true);
+        VoterSignup frame = new VoterSignup();
+        frame.setVisible(true);
     }
 }
