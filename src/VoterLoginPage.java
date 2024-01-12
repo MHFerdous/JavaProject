@@ -200,12 +200,10 @@ public class VoterLoginPage extends JFrame {
 
             // Check if the ResultSet contains any data
             if (resultSetId.next() && resultSetPass.next()) {
-                // page rout
                 VoterLoginButton.addActionListener(e -> {
                     new VotingPage();
                     dispose();
                 });
-                System.out.println("Match found!");
             } else {
                 ValidationErrorText.setText("ভুল! সঠিক আইডি ও পাসওয়ার্ড দিন");
             }
