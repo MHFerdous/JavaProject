@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.sql.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,7 +10,8 @@ public class NcLoginPage extends JFrame {
 
     private JPasswordField passwordField;
     private JTextField idField;
-    private JLabel idFieldValidation;
+    private JLabel ValidationErrorText;
+    private Connection connection;
 
     public NcLoginPage() {
         setLayout(null);
@@ -38,7 +40,19 @@ public class NcLoginPage extends JFrame {
                 formMouseClicked();
             }
         });
-        getContentPane().requestFocusInWindow(); 
+        getContentPane().requestFocusInWindow();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/nirbabon_commission", "root", "");
+        } catch (ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "MySQL JDBC Driver not found!", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error connecting to the database", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
+        }
+
     }
     private void formMouseClicked() {
         getContentPane().requestFocusInWindow();
@@ -72,21 +86,21 @@ public class NcLoginPage extends JFrame {
         add(idField);
         idField.setForeground(Color.GRAY);
 
-        idFieldValidation = new JLabel();
-        idFieldValidation.setBounds(340, 98, 227, 37);
-        add(idFieldValidation);
-        idFieldValidation.setForeground(Color.white);
+        ValidationErrorText = new JLabel();
+        ValidationErrorText.setBounds(340, 98, 227, 37);
+        add(ValidationErrorText);
+        ValidationErrorText.setForeground(Color.white);
         idField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                String PATTERN = "[০-৯]+";
+                String PATTERN = "[০-৯0-9]+";
                 Pattern check = Pattern.compile(PATTERN);
                 Matcher matcher = check.matcher(idField.getText());
                 if (!matcher.matches()) {
-                    idFieldValidation.setText("বাংলায় সংখ্যা লিখুন");
-                    idFieldValidation.setFont(banglaFont.deriveFont(Font.BOLD, 16));
+                    ValidationErrorText.setText("সংখ্যা লিখুন");
+                    ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 16));
                 } else {
-                    idFieldValidation.setText(null);
+                    ValidationErrorText.setText(null);
                 }
             }
         });
@@ -104,7 +118,6 @@ public class NcLoginPage extends JFrame {
                     passwordField.setText("");
                     passwordField.setEchoChar('*');
                     passwordField.setForeground(Color.BLACK);
-                    passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
                 }
             }
             @Override
@@ -113,7 +126,6 @@ public class NcLoginPage extends JFrame {
                     passwordField.setText("পাসওয়ার্ড দিন");
                     passwordField.setEchoChar((char) 0);
                     passwordField.setForeground(Color.gray);
-                    passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
 
                 }
             }
@@ -130,7 +142,6 @@ public class NcLoginPage extends JFrame {
                 if (textField.getText().equals("নির্বাচন কমিশন আই ডি নাম্বার দিন")) {
                     textField.setText("");
                     textField.setForeground(Color.BLACK);
-                    textField.setFont(font.deriveFont(Font.PLAIN, 17));
                 }
             }
             @Override
@@ -138,7 +149,6 @@ public class NcLoginPage extends JFrame {
                 if (textField.getText().isEmpty()) {
                     textField.setText("নির্বাচন কমিশন আই ডি নাম্বার দিন");
                     textField.setForeground(Color.GRAY);
-                    passwordField.setFont(font.deriveFont(Font.PLAIN, 17));
                 }
             }
         });
@@ -156,9 +166,40 @@ public class NcLoginPage extends JFrame {
         NcLoginButton.setForeground(Color.BLACK);
         NcLoginButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
         NcLoginButton.setBackground(new Color(0x5FFF95));
-
         add(NcLoginButton);
+        NcLoginButton.addActionListener(e -> LoginDatabase());
     }
+    private void LoginDatabase() {
+        String idValue = idField.getText();
+        char[] passwordValue = passwordField.getPassword();
+
+        String idReadSQL = "SELECT NcId FROM nclogin WHERE NcId = ?";
+        String passReadSQL = "SELECT NcPass FROM nclogin WHERE NcPass = ?";
+
+        try (PreparedStatement preparedStatementId = connection.prepareStatement(idReadSQL);
+             PreparedStatement preparedStatementPass = connection.prepareStatement(passReadSQL)) {
+
+            preparedStatementId.setString(1, idValue);
+            preparedStatementPass.setString(1, String.valueOf(passwordValue));
+
+            ResultSet resultSetId = preparedStatementId.executeQuery();
+            ResultSet resultSetPass = preparedStatementPass.executeQuery();
+
+            // Check if the ResultSet contains any data
+            if (resultSetId.next() && resultSetPass.next()) {
+                new NcHomepage();
+                dispose();
+            }
+            else {
+                ValidationErrorText.setText("ভুল! সঠিক আইডি ও পাসওয়ার্ড দিন");
+            }
+        } catch (SQLException exception) {
+            ValidationErrorText.setText("কোড এর এস-কিউ-এল ভুল আছে");
+        }
+    }
+
+
+
 
     public static void main(String[] args) {
         new NcLoginPage();//add comment this and above setVisible(true); line - if below line is active
@@ -166,5 +207,6 @@ public class NcLoginPage extends JFrame {
         //To run this page remove comment
 //        NcLoginPage frame = new NcLoginPage();
 //        frame.setVisible(true);
+
     }
 }

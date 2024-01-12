@@ -4,12 +4,17 @@ import java.awt.event.*;
 import java.io.*;
 
 public class VoterSignup extends JFrame {
-    private JPasswordField passTxtF;
+    private JPasswordField passTxtF; //need when database connect
+    private JTextField nameTxtF; //need when database connect
+    private JTextField nidTxtF; //need when database connect
+    private JTextField emailTxtF;//need when database connect
+    private JTextField mobileTxtF;//need when database connect
+    private JPasswordField passwordField;
     public VoterSignup() {
         setSize(612, 400);
         setTitle("ভোটার নিবন্ধন");
         setLocationRelativeTo(null);
-        //setVisible(true);
+        setVisible(true);
         setResizable(false);
         getContentPane().setBackground(new Color(0x007355));
         setLayout(null);
@@ -40,147 +45,95 @@ public class VoterSignup extends JFrame {
         setIconImage(frameIcon.getImage());
     }
 
-    private void homeButton() {
-        ImageIcon homeIconButton = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/home-icon.jpg");
-        JButton homeButton = new JButton(homeIconButton);
-        homeButton.setBounds(314, 10, 22, 22);
-        add(homeButton);
-
-        homeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MainPage frame = new MainPage();
-                dispose();
-                frame.setVisible(true);
-            }
-        });
-    }
-
     private Font loadBanglaFont() {
         try {
-            return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.PLAIN, 14);
+            return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.PLAIN, 17);
         } catch (FontFormatException | IOException e) {
-            return new Font("Arial", Font.PLAIN, 14); // Fallback to a default font
+            return new Font("Arial", Font.PLAIN, 17); // Fallback to a default font
         }
     }
 
     private void textFields(Font font) {
-        JTextField nameTxtF = new JTextField("সম্পূর্ণ নাম");
-        nameTxtF.setBounds(337,51,227,37);
-        nameTxtF.setBackground(new Color(0xD9D9D9));
-        nameTxtF.setForeground(Color.gray);
-        nameTxtF.setFont(font);
-        add(nameTxtF);
-        nameTxtF.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if(nameTxtF.getText().equals("সম্পূর্ণ নাম")){
-                    nameTxtF.setText(" ");
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if(nameTxtF.getText().equals(" ")){
-                    nameTxtF.setText("সম্পূর্ণ নাম");
-                    nameTxtF.setForeground(Color.gray);
-                }
-            }
-        });
-        JTextField nidTxtF = new JTextField("এন আই ডি নাম্বার");
-        nidTxtF.setBounds(337,101,227,37);
-        nidTxtF.setBackground(new Color(0xD9D9D9));
-        nidTxtF.setForeground(Color.gray);
-        add(nidTxtF);
-        nidTxtF.setFont(font);
-        nidTxtF.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if(nidTxtF.getText().equals("এন আই ডি নাম্বার")){
-                    nidTxtF.setText(" ");
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if(nidTxtF.getText().equals(" ")){
-                    nidTxtF.setText("এন আই ডি নাম্বার");
-                    nidTxtF.setForeground(Color.gray);
-                }
-            }
-        });
-        passTxtF = new JPasswordField();
-        passTxtF.setBounds(337,151,227,37);
-        passTxtF.setBackground(new Color(0xD9D9D9));
-        passTxtF.setFont(font);
-        PasswordHintText(passTxtF, font);
-        add(passTxtF);
-        passTxtF.addFocusListener(new FocusAdapter() { // show and hide password hintText
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (String.valueOf(passTxtF.getPassword()).equals("পাসওয়ার্ড")) {
-                    passTxtF.setText("");
-                    passTxtF.setEchoChar('*');
-                    passTxtF.setForeground(Color.gray);
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (String.valueOf(passTxtF.getPassword()).isEmpty()) {
-                    passTxtF.setText("পাসওয়ার্ড");
-                    passTxtF.setEchoChar((char) 0);
-                    passTxtF.setFont(font.deriveFont(Font.PLAIN, 14));
-                }
-            }
-        });
-        JTextField emailTxtF = new JTextField("ই-মেইল");
-        emailTxtF.setBounds(337,201,227,37);
-        emailTxtF.setBackground(new Color(0xD9D9D9));
-        emailTxtF.setForeground(Color.gray);
-        emailTxtF.setFont(font);
-        add(emailTxtF);
-        emailTxtF.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if(emailTxtF.getText().equals("ই-মেইল")){
-                    emailTxtF.setText(" ");
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if(emailTxtF.getText().equals(" ")){
-                    emailTxtF.setText("ই-মেইল");
-                    emailTxtF.setForeground(Color.gray);
-                }
-            }
-        });
-        JTextField mobileTxtF = new JTextField("মোবাইল নাম্বার");
-        mobileTxtF.setBounds(337,251,227,37);
-        mobileTxtF.setBackground(new Color(0xD9D9D9));
-        mobileTxtF.setForeground(Color.gray);
-        mobileTxtF.setFont(font);
-        add(mobileTxtF);
-        mobileTxtF.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if(
-                        mobileTxtF.getText().equals("মোবাইল নাম্বার")){
-                    mobileTxtF.setText(" ");
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if(mobileTxtF.getText().equals(" ")){
-                    mobileTxtF.setText("মোবাইল নাম্বার");
-                    mobileTxtF.setForeground(Color.gray);
-                }
-            }
-        });
+        nameTxtF = createTextField("সম্পূর্ণ নাম", 51, font);
+        nidTxtF = createTextField("এন আই ডি নাম্বার", 101, font);
+        passTxtF = createPasswordField(font);
+        emailTxtF = createTextField("ই-মেইল", 201, font);
+        mobileTxtF = createTextField("মোবাইল নাম্বার", 251, font);
+    }
 
+    private JTextField createTextField(String hintText, int y, Font font) {
+        JTextField textField = new JTextField(hintText);
+        textField.setBounds(337, y, 227, 37);
+        textField.setBackground(new Color(0xD9D9D9));
+        textField.setForeground(Color.GRAY);
+        textField.setFont(font);
+
+        textField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textField.getText().equals(hintText)) {
+                    textField.setText("");
+                    textField.setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField.getText().isEmpty()) {
+                    textField.setText(hintText);
+                    textField.setForeground(Color.GRAY);
+                }
+            }
+        });
+        add(textField);
+        return textField;
+    }
+
+    private JPasswordField createPasswordField(Font font) {
+        passwordField = new JPasswordField();
+        passwordField.setBounds(337, 151, 227, 37);
+        passwordField.setBackground(new Color(0xD9D9D9));
+        passwordField.setFont(font);
+        PasswordHintText(passwordField, font);
+
+        passwordField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (String.valueOf(passwordField.getPassword()).equals("পাসওয়ার্ড")) {
+                    passwordField.setText("");
+                    passwordField.setEchoChar('*');
+                    passwordField.setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (String.valueOf(passwordField.getPassword()).isEmpty()) {
+                    passwordField.setText("পাসওয়ার্ড");
+                    passwordField.setEchoChar((char) 0);
+                    passwordField.setFont(font.deriveFont(Font.PLAIN, 17));
+                    passwordField.setForeground(Color.GRAY);
+                }
+            }
+        });
+        add(passwordField);
+        return passwordField;
     }
     private void PasswordHintText(JPasswordField passTxtF, Font font) {
         passTxtF.setText("পাসওয়ার্ড");
         passTxtF.setForeground(Color.GRAY);
-        passTxtF.setFont(font.deriveFont(Font.PLAIN, 14));
+        passTxtF.setFont(font.deriveFont(Font.PLAIN, 17));
         passTxtF.setEchoChar((char) 0);
+    }
+    private void homeButton() {
+        ImageIcon homeIconButton = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/home-icon.jpg");
+        JButton homeButton = new JButton(homeIconButton);
+        homeButton.setBounds(317, 10, 22, 22);
+        add(homeButton);
+
+        homeButton.addActionListener(e -> {
+            MainPage frame = new MainPage();
+            dispose();
+            frame.setVisible(true);
+        });
     }
     private void signupButton(Font font) {
         JButton signButton = new JButton("নিবন্ধন করুন");
@@ -189,18 +142,13 @@ public class VoterSignup extends JFrame {
         signButton.setBackground(new Color(0x5FFF95));
         signButton.setFont(font.deriveFont(Font.BOLD,20));
         add(signButton);
-        signButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Signup Button clicked");
-            }
-        });
+        signButton.addActionListener(e -> System.out.println("Signup Button clicked"));
     }
     public static void main(String[] args) {
-        //new VoterSignup();//add comment this and above setVisible(true); line - if below line is active
+        new VoterSignup();//add comment this and above setVisible(true); line - if below line is active
 
         //To run this page remove comment
-        VoterSignup frame = new VoterSignup();
-        frame.setVisible(true);
+//        VoterSignup frame = new VoterSignup();
+//        frame.setVisible(true);
     }
 }

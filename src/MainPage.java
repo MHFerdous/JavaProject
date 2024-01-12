@@ -80,5 +80,6 @@ public class MainPage extends JFrame {
             MainPage frame = new MainPage();
             frame.setVisible(true);
 
+
     }
 }

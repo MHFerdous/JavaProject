@@ -2,12 +2,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.sql.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class VoterLoginPage extends JFrame {
     private JPasswordField passwordField;
-    private JLabel NidFieldValidation;
+    private JTextField NidField;
+    private JLabel ValidationErrorText;
+    private JButton VoterLoginButton;
+    private Connection connection;
     public VoterLoginPage() {
         setLayout(null);
         setSize(612, 400);
@@ -36,6 +40,16 @@ public class VoterLoginPage extends JFrame {
             }
         });
         getContentPane().requestFocusInWindow();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/nirbabon_commission", "root", "");
+        } catch (ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "MySQL JDBC Driver not found!", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error connecting to the database", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
+        }
     }
     private void formMouseClicked() {
         getContentPane().requestFocusInWindow();
@@ -61,28 +75,28 @@ public class VoterLoginPage extends JFrame {
 
     private void addTextFields(Font banglaFont) {
         // First text field
-        JTextField NidField = new JTextField();
+        NidField = new JTextField();
         IdHintText(NidField, banglaFont);
         NidField.setBounds(340, 131, 227, 37);
         NidField.setBackground(new Color(0xD9D9D9));
         add(NidField);
         NidField.setForeground(Color.GRAY);
 
-        NidFieldValidation = new JLabel();
-        NidFieldValidation.setBounds(340, 98, 227, 37);
-        add(NidFieldValidation);
-        NidFieldValidation.setForeground(Color.white);
+        ValidationErrorText = new JLabel();
+        ValidationErrorText.setBounds(340, 98, 227, 37);
+        add(ValidationErrorText);
+        ValidationErrorText.setForeground(Color.white);
         NidField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                String PATTERN = "[০-৯]+";
+                String PATTERN = "[০-৯0-9]+";
                 Pattern check = Pattern.compile(PATTERN);
                 Matcher matcher = check.matcher(NidField.getText());
                 if (!matcher.matches()) {
-                    NidFieldValidation.setText("বাংলায় সংখ্যা লিখুন");
-                    NidFieldValidation.setFont(banglaFont.deriveFont(Font.BOLD, 16));
+                    ValidationErrorText.setText("সংখ্যা লিখুন");
+                    ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 16));
                 } else {
-                    NidFieldValidation.setText(null);
+                    ValidationErrorText.setText(null);
                 }
             }
         });
@@ -146,16 +160,14 @@ public class VoterLoginPage extends JFrame {
         passwordField.setEchoChar((char) 0);
     }
     private void VoterLoginButton(Font banglaFont) {
-        JButton VoterLoginButton = new JButton("প্রবেশ করুন");
+        VoterLoginButton = new JButton("প্রবেশ করুন");
         VoterLoginButton.setBounds(385, 260, 132, 44);
         VoterLoginButton.setForeground(Color.BLACK);
         VoterLoginButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
         VoterLoginButton.setBackground(new Color(0x5FFF95));
-        VoterLoginButton.addActionListener(e -> {
-            new VotingPage();
-            dispose();
-        });
+
         add(VoterLoginButton);
+        VoterLoginButton.addActionListener(e -> LoginDatabase());
     }
     private void VoterSignupButton(Font banglaFont) {
         JButton VoterSignupButton = new JButton("নিবন্ধন করুন");
@@ -168,6 +180,38 @@ public class VoterLoginPage extends JFrame {
             dispose();
         });
         add(VoterSignupButton);
+    }
+
+    private void LoginDatabase() {
+        String idValue = NidField.getText();
+        char[] passwordValue = passwordField.getPassword();
+
+        String idReadSQL = "SELECT NcId FROM nclogin WHERE NcId = ?";
+        String passReadSQL = "SELECT NcPass FROM nclogin WHERE NcPass = ?";
+
+        try (PreparedStatement preparedStatementId = connection.prepareStatement(idReadSQL);
+             PreparedStatement preparedStatementPass = connection.prepareStatement(passReadSQL)) {
+
+            preparedStatementId.setString(1, idValue);
+            preparedStatementPass.setString(1, String.valueOf(passwordValue));
+
+            ResultSet resultSetId = preparedStatementId.executeQuery();
+            ResultSet resultSetPass = preparedStatementPass.executeQuery();
+
+            // Check if the ResultSet contains any data
+            if (resultSetId.next() && resultSetPass.next()) {
+                // page rout
+                VoterLoginButton.addActionListener(e -> {
+                    new VotingPage();
+                    dispose();
+                });
+                System.out.println("Match found!");
+            } else {
+                ValidationErrorText.setText("ভুল! সঠিক আইডি ও পাসওয়ার্ড দিন");
+            }
+        } catch (SQLException exception) {
+            ValidationErrorText.setText("কোড এর এস-কিউ-এল ভুল আছে");
+        }
     }
     public static void main(String[] args) {
         new VoterLoginPage();//add comment this and above setVisible(true); line - if below line is active
