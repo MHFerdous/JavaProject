@@ -31,7 +31,7 @@ public class NcLoginPage extends JFrame {
 
         Font banglaFont = loadBanglaFont(); // Load Bangla font
         addTextFields(banglaFont); // Add text fields
-        
+
         NcLoginButton(banglaFont);// Add button
         HomeButton();// Add button
 
@@ -54,6 +54,16 @@ public class NcLoginPage extends JFrame {
         }
 
     }
+
+    public static void main(String[] args) {
+        new NcLoginPage();//add comment this and above setVisible(true); line - if below line is active
+
+        //To run this page remove comment
+//        NcLoginPage frame = new NcLoginPage();
+//        frame.setVisible(true);
+
+    }
+
     private void formMouseClicked() {
         getContentPane().requestFocusInWindow();
     }
@@ -120,6 +130,7 @@ public class NcLoginPage extends JFrame {
                     passwordField.setForeground(Color.BLACK);
                 }
             }
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (String.valueOf(passwordField.getPassword()).isEmpty()) {
@@ -144,6 +155,7 @@ public class NcLoginPage extends JFrame {
                     textField.setForeground(Color.BLACK);
                 }
             }
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (textField.getText().isEmpty()) {
@@ -153,6 +165,7 @@ public class NcLoginPage extends JFrame {
             }
         });
     }
+
     private void PasswordHintText(JPasswordField passwordField, Font font) {
         passwordField.setText("পাসওয়ার্ড দিন");
         passwordField.setForeground(Color.GRAY);
@@ -169,6 +182,7 @@ public class NcLoginPage extends JFrame {
         add(NcLoginButton);
         NcLoginButton.addActionListener(e -> LoginDatabase());
     }
+
     private void LoginDatabase() {
         String idValue = idField.getText();
         char[] passwordValue = passwordField.getPassword();
@@ -189,24 +203,11 @@ public class NcLoginPage extends JFrame {
             if (resultSetId.next() && resultSetPass.next()) {
                 new NcHomepage();
                 dispose();
-            }
-            else {
+            } else {
                 ValidationErrorText.setText("ভুল! সঠিক আইডি ও পাসওয়ার্ড দিন");
             }
         } catch (SQLException exception) {
             ValidationErrorText.setText("কোড এর এস-কিউ-এল ভুল আছে");
         }
-    }
-
-
-
-
-    public static void main(String[] args) {
-        new NcLoginPage();//add comment this and above setVisible(true); line - if below line is active
-
-        //To run this page remove comment
-//        NcLoginPage frame = new NcLoginPage();
-//        frame.setVisible(true);
-
     }
 }

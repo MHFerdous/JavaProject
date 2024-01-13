@@ -6,7 +6,7 @@ import java.io.*;
 public class MainPage extends JFrame {
     private final JRadioButton radioButton1;
     private final JRadioButton radioButton2;
-    
+
     public MainPage() {
         setLayout(null);
         setSize(612, 400);
@@ -16,7 +16,7 @@ public class MainPage extends JFrame {
         setLocationRelativeTo(null); // window open in center
         getContentPane().setBackground(new Color(0x007355));
 
-        
+
         Font banglaFont = loadBanglaFont(); // Load Bangla font
 
         // Add image
@@ -29,6 +29,14 @@ public class MainPage extends JFrame {
         radioButton1 = addTextWithRadioButton("নির্বাচন কমিশন", 127, banglaFont);
         radioButton2 = addTextWithRadioButton("ভোটার", 178, banglaFont);
         SubmitButton(banglaFont);
+    }
+
+    public static void main(String[] args) {
+
+        MainPage frame = new MainPage();
+        frame.setVisible(true);
+
+
     }
 
     private Font loadBanglaFont() {
@@ -66,20 +74,13 @@ public class MainPage extends JFrame {
 
         SubmitButton.addActionListener(e -> {
             if (radioButton1.isSelected()) {
-                    new NcLoginPage();
-                    dispose();
+                new NcLoginPage();
+                dispose();
             } else if (radioButton2.isSelected()) {
                 new VoterLoginPage();
                 dispose();
             }
         });
         add(SubmitButton);
-    }
-    public static void main(String[] args) {
-
-            MainPage frame = new MainPage();
-            frame.setVisible(true);
-
-
     }
 }

@@ -10,6 +10,7 @@ public class VoterSignup extends JFrame {
     private JTextField emailTxtF;//need when database connect
     private JTextField mobileTxtF;//need when database connect
     private JPasswordField passwordField;
+
     public VoterSignup() {
         setSize(612, 400);
         setTitle("ভোটার নিবন্ধন");
@@ -30,9 +31,19 @@ public class VoterSignup extends JFrame {
         });
         getContentPane().requestFocusInWindow();
     }
+
+    public static void main(String[] args) {
+        new VoterSignup();//add comment this and above setVisible(true); line - if below line is active
+
+        //To run this page remove comment
+//        VoterSignup frame = new VoterSignup();
+//        frame.setVisible(true);
+    }
+
     private void formMouseClicked() {
         getContentPane().requestFocusInWindow();
     }
+
     private void setImageIcons() {
         // Add image
         ImageIcon image = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/nirbacon_commison.png");
@@ -76,6 +87,7 @@ public class VoterSignup extends JFrame {
                     textField.setForeground(Color.BLACK);
                 }
             }
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (textField.getText().isEmpty()) {
@@ -104,6 +116,7 @@ public class VoterSignup extends JFrame {
                     passwordField.setForeground(Color.BLACK);
                 }
             }
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (String.valueOf(passwordField.getPassword()).isEmpty()) {
@@ -117,12 +130,14 @@ public class VoterSignup extends JFrame {
         add(passwordField);
         return passwordField;
     }
+
     private void PasswordHintText(JPasswordField passTxtF, Font font) {
         passTxtF.setText("পাসওয়ার্ড");
         passTxtF.setForeground(Color.GRAY);
         passTxtF.setFont(font.deriveFont(Font.PLAIN, 17));
         passTxtF.setEchoChar((char) 0);
     }
+
     private void homeButton() {
         ImageIcon homeIconButton = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/home-icon.jpg");
         JButton homeButton = new JButton(homeIconButton);
@@ -135,20 +150,14 @@ public class VoterSignup extends JFrame {
             frame.setVisible(true);
         });
     }
+
     private void signupButton(Font font) {
         JButton signButton = new JButton("নিবন্ধন করুন");
-        signButton.setBounds(385,300,132,44);
+        signButton.setBounds(385, 300, 132, 44);
         signButton.setForeground(Color.BLACK);
         signButton.setBackground(new Color(0x5FFF95));
-        signButton.setFont(font.deriveFont(Font.BOLD,20));
+        signButton.setFont(font.deriveFont(Font.BOLD, 20));
         add(signButton);
         signButton.addActionListener(e -> System.out.println("Signup Button clicked"));
-    }
-    public static void main(String[] args) {
-        new VoterSignup();//add comment this and above setVisible(true); line - if below line is active
-
-        //To run this page remove comment
-//        VoterSignup frame = new VoterSignup();
-//        frame.setVisible(true);
     }
 }
