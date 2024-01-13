@@ -12,7 +12,6 @@ public class VoterLoginPage extends JFrame {
     private JLabel ValidationErrorText;
     private JButton VoterLoginButton;
     private Connection connection;
-    private final Font banglaFont = loadBanglaFont(); // Load Bangla banglaFont
     public VoterLoginPage() {
         setLayout(null);
         setSize(612, 400);
@@ -28,11 +27,12 @@ public class VoterLoginPage extends JFrame {
         JLabel Image = new JLabel(MainImage);
         Image.setBounds(0, 0, 306, 360);
         add(Image);
-        
-        addTextFields(); // Add text fields
-        VoterLoginButton();// Add button
+
+        Font banglaFont = loadBanglaFont(); // Load Bangla font
+        addTextFields(banglaFont); // Add text fields
+        VoterLoginButton(banglaFont);// Add button
         HomeButton();// Add button
-        VoterSignupButton();//add button
+        VoterSignupButton(banglaFont);//add button
 
         addMouseListener(new java.awt.event.MouseAdapter() {// Request focus for the main panel to start without initial selection
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -69,14 +69,14 @@ public class VoterLoginPage extends JFrame {
         try {
             return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.PLAIN, 17);
         } catch (FontFormatException | IOException e) {
-            return new Font("Arial", Font.PLAIN, 18); // Fallback to a default banglaFont
+            return new Font("Arial", Font.PLAIN, 18); // Fallback to a default font
         }
     }
 
-    private void addTextFields() {
+    private void addTextFields(Font banglaFont) {
         // First text field
         NidField = new JTextField();
-        IdHintText(NidField);
+        IdHintText(NidField, banglaFont);
         NidField.setBounds(340, 131, 227, 37);
         NidField.setBackground(new Color(0xD9D9D9));
         add(NidField);
@@ -105,7 +105,7 @@ public class VoterLoginPage extends JFrame {
         passwordField = new JPasswordField();
         passwordField.setBounds(340, 181, 227, 37);
         passwordField.setBackground(new Color(0xD9D9D9));
-        PasswordHintText(passwordField);
+        PasswordHintText(passwordField, banglaFont);
         add(passwordField);
         passwordField.addFocusListener(new FocusAdapter() { // show and hide password hintText
             @Override
@@ -129,10 +129,10 @@ public class VoterLoginPage extends JFrame {
         });
     }
 
-    private void IdHintText(JTextField textField) {
+    private void IdHintText(JTextField textField, Font font) {
         textField.setText("এন আই ডি নাম্বার দিন");
         textField.setForeground(Color.GRAY);
-        textField.setFont(banglaFont);
+        textField.setFont(font);
 
         textField.addFocusListener(new FocusAdapter() {
             @Override
@@ -140,7 +140,7 @@ public class VoterLoginPage extends JFrame {
                 if (textField.getText().equals("এন আই ডি নাম্বার দিন")) {
                     textField.setText("");
                     textField.setForeground(Color.BLACK);
-                    passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
+                    passwordField.setFont(font.deriveFont(Font.PLAIN, 17));
                 }
             }
             @Override
@@ -148,18 +148,18 @@ public class VoterLoginPage extends JFrame {
                 if (textField.getText().isEmpty()) {
                     textField.setText("এন আই ডি নাম্বার দিন");
                     textField.setForeground(Color.GRAY);
-                    passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
+                    passwordField.setFont(font.deriveFont(Font.PLAIN, 17));
                 }
             }
         });
     }
-    private void PasswordHintText(JPasswordField passwordField) {
+    private void PasswordHintText(JPasswordField passwordField, Font font) {
         passwordField.setText("পাসওয়ার্ড দিন");
         passwordField.setForeground(Color.GRAY);
-        passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
+        passwordField.setFont(font.deriveFont(Font.PLAIN, 17));
         passwordField.setEchoChar((char) 0);
     }
-    private void VoterLoginButton() {
+    private void VoterLoginButton(Font banglaFont) {
         VoterLoginButton = new JButton("প্রবেশ করুন");
         VoterLoginButton.setBounds(385, 260, 132, 44);
         VoterLoginButton.setForeground(Color.BLACK);
@@ -169,7 +169,7 @@ public class VoterLoginPage extends JFrame {
         add(VoterLoginButton);
         VoterLoginButton.addActionListener(e -> LoginDatabase());
     }
-    private void VoterSignupButton() {
+    private void VoterSignupButton(Font banglaFont) {
         JButton VoterSignupButton = new JButton("নিবন্ধন করুন");
         VoterSignupButton.setBounds(490, 10, 92, 34);
         VoterSignupButton.setForeground(Color.BLACK);
@@ -200,32 +200,17 @@ public class VoterLoginPage extends JFrame {
 
             // Check if the ResultSet contains any data
             if (resultSetId.next() && resultSetPass.next()) {
-                SwingUtilities.invokeLater(() -> {
-                    ValidationErrorText.setText("একাউন্টে প্রবেশ করা হচ্ছে");
-                    ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
+                VoterLoginButton.addActionListener(e -> {
+                    new VotingPage();
+                    dispose();
                 });
-                // Start a separate thread to wait for 3 seconds
-                new Thread(() -> {
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    SwingUtilities.invokeLater(() -> {
-                        new VotingPage();
-                        dispose();
-                    });
-                }).start();
             } else {
                 ValidationErrorText.setText("ভুল! সঠিক আইডি ও পাসওয়ার্ড দিন");
-                ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 16));
             }
         } catch (SQLException exception) {
             ValidationErrorText.setText("কোড এর এস-কিউ-এল ভুল আছে");
-            ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 16));
         }
     }
-
     public static void main(String[] args) {
         new VoterLoginPage();//add comment this and above setVisible(true); line - if below line is active
 

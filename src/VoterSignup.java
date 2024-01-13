@@ -10,7 +10,6 @@ public class VoterSignup extends JFrame {
     private JTextField emailTxtF;//need when database connect
     private JTextField mobileTxtF;//need when database connect
     private JPasswordField passwordField;
-    private final Font banglaFont = loadBanglaFont(); // Load Bangla banglaFont
     public VoterSignup() {
         setSize(612, 400);
         setTitle("ভোটার নিবন্ধন");
@@ -21,8 +20,9 @@ public class VoterSignup extends JFrame {
         setLayout(null);
         setImageIcons();
         homeButton();
-        textFields();
-        signupButton();
+        Font font = loadBanglaFont();
+        textFields(font);
+        signupButton(font);
         addMouseListener(new java.awt.event.MouseAdapter() {// Request focus for the main panel to start without initial selection
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked();
@@ -53,20 +53,20 @@ public class VoterSignup extends JFrame {
         }
     }
 
-    private void textFields() {
-        nameTxtF = createTextField("সম্পূর্ণ নাম", 51);
-        nidTxtF = createTextField("এন আই ডি নাম্বার", 101);
-        passTxtF = createPasswordField();
-        emailTxtF = createTextField("ই-মেইল", 201);
-        mobileTxtF = createTextField("মোবাইল নাম্বার", 251);
+    private void textFields(Font font) {
+        nameTxtF = createTextField("সম্পূর্ণ নাম", 51, font);
+        nidTxtF = createTextField("এন আই ডি নাম্বার", 101, font);
+        passTxtF = createPasswordField(font);
+        emailTxtF = createTextField("ই-মেইল", 201, font);
+        mobileTxtF = createTextField("মোবাইল নাম্বার", 251, font);
     }
 
-    private JTextField createTextField(String hintText, int y) {
+    private JTextField createTextField(String hintText, int y, Font font) {
         JTextField textField = new JTextField(hintText);
         textField.setBounds(337, y, 227, 37);
         textField.setBackground(new Color(0xD9D9D9));
         textField.setForeground(Color.GRAY);
-        textField.setFont(banglaFont);
+        textField.setFont(font);
 
         textField.addFocusListener(new FocusListener() {
             @Override
@@ -88,12 +88,12 @@ public class VoterSignup extends JFrame {
         return textField;
     }
 
-    private JPasswordField createPasswordField() {
+    private JPasswordField createPasswordField(Font font) {
         passwordField = new JPasswordField();
         passwordField.setBounds(337, 151, 227, 37);
         passwordField.setBackground(new Color(0xD9D9D9));
-        passwordField.setFont(banglaFont);
-        PasswordHintText(passwordField);
+        passwordField.setFont(font);
+        PasswordHintText(passwordField, font);
 
         passwordField.addFocusListener(new FocusListener() {
             @Override
@@ -109,7 +109,7 @@ public class VoterSignup extends JFrame {
                 if (String.valueOf(passwordField.getPassword()).isEmpty()) {
                     passwordField.setText("পাসওয়ার্ড");
                     passwordField.setEchoChar((char) 0);
-                    passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
+                    passwordField.setFont(font.deriveFont(Font.PLAIN, 17));
                     passwordField.setForeground(Color.GRAY);
                 }
             }
@@ -117,10 +117,10 @@ public class VoterSignup extends JFrame {
         add(passwordField);
         return passwordField;
     }
-    private void PasswordHintText(JPasswordField passTxtF) {
+    private void PasswordHintText(JPasswordField passTxtF, Font font) {
         passTxtF.setText("পাসওয়ার্ড");
         passTxtF.setForeground(Color.GRAY);
-        passTxtF.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
+        passTxtF.setFont(font.deriveFont(Font.PLAIN, 17));
         passTxtF.setEchoChar((char) 0);
     }
     private void homeButton() {
@@ -135,12 +135,12 @@ public class VoterSignup extends JFrame {
             frame.setVisible(true);
         });
     }
-    private void signupButton() {
+    private void signupButton(Font font) {
         JButton signButton = new JButton("নিবন্ধন করুন");
         signButton.setBounds(385,300,132,44);
         signButton.setForeground(Color.BLACK);
         signButton.setBackground(new Color(0x5FFF95));
-        signButton.setFont(banglaFont.deriveFont(Font.BOLD,20));
+        signButton.setFont(font.deriveFont(Font.BOLD,20));
         add(signButton);
         signButton.addActionListener(e -> System.out.println("Signup Button clicked"));
     }
