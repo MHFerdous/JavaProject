@@ -9,6 +9,7 @@ public class NcHomepage extends JFrame {
     private JTextField Nid; //need when database connect
     private JTextField MobileNumber;//need when database connect
     private JTextField Protik;//need when database connect
+
     public NcHomepage() {
 
         setLayout(null);
@@ -37,13 +38,23 @@ public class NcHomepage extends JFrame {
         });
         getContentPane().requestFocusInWindow();
     }
+
+    public static void main(String[] args) {
+        new NcHomepage();//add comment this and above setVisible(true); line - if below line is active
+
+        //To run this page remove comment
+//        NcHomepage frame = new NcHomepage();
+//        frame.setVisible(true);
+    }
+
     private void formMouseClicked() {
         getContentPane().requestFocusInWindow();
     }
+
     private void HeadingText(Font banglaFont) {
         JLabel HeadingText = new JLabel();
         HeadingText.setText("নির্বাচন কমিশন বিভাগ");
-        HeadingText.setBounds(216,15,179,24);
+        HeadingText.setBounds(216, 15, 179, 24);
         HeadingText.setFont(banglaFont.deriveFont(Font.BOLD, 24));
         add(HeadingText);
     }
@@ -53,7 +64,9 @@ public class NcHomepage extends JFrame {
             return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.PLAIN, 17);
         } catch (FontFormatException | IOException e) {
             return new Font("Arial", Font.PLAIN, 18);
-        }}
+        }
+    }
+
     private void textFields(Font font) {
         Name = createTextField("প্রার্থীর সম্পূর্ণ নাম", 63, font);
         Nid = createTextField("প্রার্থীর এন আই ডি নাম্বার", 113, font);
@@ -61,6 +74,7 @@ public class NcHomepage extends JFrame {
         MobileNumber = createTextField("প্রার্থীর মোবাইল নাম্বার", 213, font);
         Protik = createTextField("প্রার্থীর প্রতীক", 263, font);
     }
+
     private JTextField createTextField(String hintText, int y, Font font) {
         JTextField textField = new JTextField(hintText);
         textField.setBounds(312, y, 227, 37);
@@ -75,6 +89,7 @@ public class NcHomepage extends JFrame {
                     textField.setForeground(Color.BLACK);
                 }
             }
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (textField.getText().isEmpty()) {
@@ -86,6 +101,7 @@ public class NcHomepage extends JFrame {
         add(textField);
         return textField;
     }
+
     private void HomeButton(Font banglaFont) {
         JButton HomeButton = new JButton("প্রস্থান");
         HomeButton.setBounds(10, 8, 70, 35);
@@ -102,7 +118,6 @@ public class NcHomepage extends JFrame {
         add(HomeButton);
     }
 
-
     private void SubmitButton(Font banglaFont) {
         JButton LogButton1 = new JButton("সংরক্ষণ");
         LogButton1.setBounds(373, 310, 102, 44);
@@ -118,6 +133,7 @@ public class NcHomepage extends JFrame {
 
         add(LogButton1);
     }
+
     private void ElectionResultButton(Font banglaFont) {
         JButton LogButton1 = new JButton("নির্বাচনী ফলাফল");
         LogButton1.setBounds(72, 310, 159, 44);
@@ -132,13 +148,5 @@ public class NcHomepage extends JFrame {
         });
 
         add(LogButton1);
-    }
-
-    public static void main(String[] args) {
-        new NcHomepage();//add comment this and above setVisible(true); line - if below line is active
-
-        //To run this page remove comment
-//        NcHomepage frame = new NcHomepage();
-//        frame.setVisible(true);
     }
 }

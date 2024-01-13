@@ -12,6 +12,7 @@ public class VoterLoginPage extends JFrame {
     private JLabel ValidationErrorText;
     private JButton VoterLoginButton;
     private Connection connection;
+
     public VoterLoginPage() {
         setLayout(null);
         setSize(612, 400);
@@ -51,9 +52,19 @@ public class VoterLoginPage extends JFrame {
             System.exit(1);
         }
     }
+
+    public static void main(String[] args) {
+        new VoterLoginPage();//add comment this and above setVisible(true); line - if below line is active
+
+        //To run this page remove comment
+//        VoterLoginPage frame = new VoterLoginPage();
+//        frame.setVisible(true);
+    }
+
     private void formMouseClicked() {
         getContentPane().requestFocusInWindow();
     }
+
     private void HomeButton() {
         JButton HomeButton = new JButton(new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/home-icon.jpg"));
         HomeButton.setBounds(314, 10, 20, 20);
@@ -117,6 +128,7 @@ public class VoterLoginPage extends JFrame {
                     passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
                 }
             }
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (String.valueOf(passwordField.getPassword()).isEmpty()) {
@@ -143,6 +155,7 @@ public class VoterLoginPage extends JFrame {
                     passwordField.setFont(font.deriveFont(Font.PLAIN, 17));
                 }
             }
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (textField.getText().isEmpty()) {
@@ -153,12 +166,14 @@ public class VoterLoginPage extends JFrame {
             }
         });
     }
+
     private void PasswordHintText(JPasswordField passwordField, Font font) {
         passwordField.setText("পাসওয়ার্ড দিন");
         passwordField.setForeground(Color.GRAY);
         passwordField.setFont(font.deriveFont(Font.PLAIN, 17));
         passwordField.setEchoChar((char) 0);
     }
+
     private void VoterLoginButton(Font banglaFont) {
         VoterLoginButton = new JButton("প্রবেশ করুন");
         VoterLoginButton.setBounds(385, 260, 132, 44);
@@ -169,6 +184,7 @@ public class VoterLoginPage extends JFrame {
         add(VoterLoginButton);
         VoterLoginButton.addActionListener(e -> LoginDatabase());
     }
+
     private void VoterSignupButton(Font banglaFont) {
         JButton VoterSignupButton = new JButton("নিবন্ধন করুন");
         VoterSignupButton.setBounds(490, 10, 92, 34);
@@ -210,12 +226,5 @@ public class VoterLoginPage extends JFrame {
         } catch (SQLException exception) {
             ValidationErrorText.setText("কোড এর এস-কিউ-এল ভুল আছে");
         }
-    }
-    public static void main(String[] args) {
-        new VoterLoginPage();//add comment this and above setVisible(true); line - if below line is active
-
-        //To run this page remove comment
-//        VoterLoginPage frame = new VoterLoginPage();
-//        frame.setVisible(true);
     }
 }

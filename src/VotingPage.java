@@ -4,7 +4,7 @@ import java.io.*;
 
 public class VotingPage extends JFrame {
 
-    public VotingPage(){
+    public VotingPage() {
         setLayout(null);
         setSize(612, 400);
         setResizable(false);
@@ -21,6 +21,15 @@ public class VotingPage extends JFrame {
 
         JRadioButton radioButton1 = addTextWithRadioButton(banglaFont);
     }
+
+    public static void main(String[] args) {
+        new VotingPage(); //add comment this and above setVisible(true); line - if below line is active
+
+        //To run this page remove comment
+//        VotingPage frame = new VotingPage();
+//        frame.setVisible(true);
+    }
+
     private Font loadBanglaFont() {
         try {
             return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.PLAIN, 14);
@@ -28,6 +37,7 @@ public class VotingPage extends JFrame {
             return new Font("Arial", Font.PLAIN, 14); // Fallback to a default font
         }
     }
+
     private void BackButton1(Font banglaFont) {
         JButton BackButton1 = new JButton("প্রস্থান");
         BackButton1.setBounds(520, 7, 71, 37);
@@ -58,6 +68,7 @@ public class VotingPage extends JFrame {
 
         add(voteButton);
     }
+
     private void cancelButton(Font banglaFont) {
         JButton cancelButton = new JButton("বাতিল");
         cancelButton.setBounds(320, 300, 149, 42);
@@ -71,7 +82,8 @@ public class VotingPage extends JFrame {
 
         add(cancelButton);
     }
-    private void addTextField(Font banglaFont){
+
+    private void addTextField(Font banglaFont) {
 
         JPanel jPanel = new JPanel();
         jPanel.setBounds(165, 45, 270, 30);
@@ -85,6 +97,7 @@ public class VotingPage extends JFrame {
 
         jPanel.add(label1);
     }
+
     private JRadioButton addTextWithRadioButton(Font banglaFont) {
         JRadioButton radioButton = new JRadioButton("১নং প্রার্থীর নাম");
         radioButton.setBounds(175, 90, 250, 25);
@@ -97,12 +110,5 @@ public class VotingPage extends JFrame {
         });
         add(radioButton);
         return radioButton;
-    }
-    public static void main(String[] args) {
-        new VotingPage(); //add comment this and above setVisible(true); line - if below line is active
-
-        //To run this page remove comment
-//        VotingPage frame = new VotingPage();
-//        frame.setVisible(true);
     }
 }

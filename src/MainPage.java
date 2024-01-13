@@ -2,39 +2,48 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 
-public class Main extends JFrame {
 
+public class MainPage extends JFrame {
     private final JRadioButton radioButton1;
     private final JRadioButton radioButton2;
 
-
-    public Main() {
+    public MainPage() {
         setLayout(null);
         setSize(612, 400);
         setResizable(false);
+        setTitle("বাংলাদেশ অনলাইন ভোটিং সিস্টেম");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null); // window open in center
         getContentPane().setBackground(new Color(0x007355));
 
-        // Load Bangla font
-        Font banglaFont = loadBanglaFont();
+
+        Font banglaFont = loadBanglaFont(); // Load Bangla font
 
         // Add image
-        ImageIcon imageIcon = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/nirbacon_commison.png");
-        JLabel imageLabel = new JLabel(imageIcon);
-        imageLabel.setBounds(0, 0, 306, 360);
-        add(imageLabel);
+        ImageIcon MainImage = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/nirbacon_commison.png");
+        JLabel Image = new JLabel(MainImage);
+        Image.setBounds(0, 0, 306, 360);
+        add(Image);
 
         // Add text with radio buttons
         radioButton1 = addTextWithRadioButton("নির্বাচন কমিশন", 127, banglaFont);
         radioButton2 = addTextWithRadioButton("ভোটার", 178, banglaFont);
-        addButton(banglaFont);
+        SubmitButton(banglaFont);
+    }
+
+    public static void main(String[] args) {
+
+        MainPage frame = new MainPage();
+        frame.setVisible(true);
+
+
     }
 
     private Font loadBanglaFont() {
         try {
-            return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.PLAIN, 14);
+            return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.BOLD, 14);
         } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
-            return new Font("Nikosh", Font.PLAIN, 20);
+            return new Font("Arial", Font.PLAIN, 20);
         }
     }
 
@@ -56,44 +65,22 @@ public class Main extends JFrame {
         return radioButton;
     }
 
-    private void addButton(Font banglaFont) {
-        JButton button = new JButton("এগিয়ে যান");
-        button.setBounds(398, 240, 132, 44);
-        button.setForeground(Color.BLACK);
-        button.setFont(banglaFont.deriveFont(Font.BOLD, 20));
-        button.setBackground(new Color(0x5FFF95));
+    private void SubmitButton(Font banglaFont) {
+        JButton SubmitButton = new JButton("এগিয়ে যান");
+        SubmitButton.setBounds(398, 240, 132, 44);
+        SubmitButton.setForeground(Color.BLACK);
+        SubmitButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
+        SubmitButton.setBackground(new Color(0x5FFF95));
 
-        button.addActionListener(e -> {
+        SubmitButton.addActionListener(e -> {
             if (radioButton1.isSelected()) {
-
-                    login1 loginFrame = new login1();
-                    loginFrame.setTitle("Bangladesh Online Voting System - Bangladesh Nirbacon Commission");
-                    loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    loginFrame.setLocationRelativeTo(null); //window open in center
-                    loginFrame.setVisible(true);
-                    dispose();
-
+                new NcLoginPage();
+                dispose();
             } else if (radioButton2.isSelected()) {
-                login2 loginFrame = new login2();
-                loginFrame.setTitle("Bangladesh Online Voting System - Voter Login Page");
-                loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                loginFrame.setLocationRelativeTo(null); //window open in center
-                loginFrame.setVisible(true);
+                new VoterLoginPage();
                 dispose();
             }
         });
-
-
-        add(button);
-    }
-
-    public static void main(String[] args) {
-
-            Main frame = new Main();
-            frame.setTitle("Bangladesh Online Voting System");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setLocationRelativeTo(null); //window open in center
-            frame.setVisible(true);
-
+        add(SubmitButton);
     }
 }
