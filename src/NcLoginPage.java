@@ -12,6 +12,7 @@ public class NcLoginPage extends JFrame {
     private JTextField idField;
     private JLabel ValidationErrorText;
     private Connection connection;
+    private final Font banglaFont = loadBanglaFont(); // Load Bangla banglaFont
 
     public NcLoginPage() {
         setLayout(null);
@@ -29,10 +30,8 @@ public class NcLoginPage extends JFrame {
         Image.setBounds(0, 0, 306, 360);
         add(Image);
 
-        Font banglaFont = loadBanglaFont(); // Load Bangla font
-        addTextFields(banglaFont); // Add text fields
-        
-        NcLoginButton(banglaFont);// Add button
+        addTextFields(); // Add text fields
+        NcLoginButton();// Add button
         HomeButton();// Add button
 
         addMouseListener(new java.awt.event.MouseAdapter() {// Request focus for the main panel to start without initial selection
@@ -77,10 +76,10 @@ public class NcLoginPage extends JFrame {
         }
     }
 
-    private void addTextFields(Font banglaFont) {
+    private void addTextFields() {
         // ID text field
         idField = new JTextField();
-        IdHintText(idField, banglaFont);
+        IdHintText(idField);
         idField.setBounds(340, 131, 227, 37);
         idField.setBackground(new Color(0xD9D9D9));
         add(idField);
@@ -109,7 +108,7 @@ public class NcLoginPage extends JFrame {
         passwordField = new JPasswordField();
         passwordField.setBounds(340, 181, 227, 37);
         passwordField.setBackground(new Color(0xD9D9D9));
-        PasswordHintText(passwordField, banglaFont);
+        PasswordHintText(passwordField);
         add(passwordField);
         passwordField.addFocusListener(new FocusAdapter() { // show and hide password hintText
             @Override
@@ -132,10 +131,10 @@ public class NcLoginPage extends JFrame {
         });
     }
 
-    private void IdHintText(JTextField textField, Font font) {
+    private void IdHintText(JTextField textField) {
         textField.setText("নির্বাচন কমিশন আই ডি নাম্বার দিন");
         textField.setForeground(Color.GRAY);
-        textField.setFont(font);
+        textField.setFont(banglaFont);
         textField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -153,14 +152,14 @@ public class NcLoginPage extends JFrame {
             }
         });
     }
-    private void PasswordHintText(JPasswordField passwordField, Font font) {
+    private void PasswordHintText(JPasswordField passwordField) {
         passwordField.setText("পাসওয়ার্ড দিন");
         passwordField.setForeground(Color.GRAY);
-        passwordField.setFont(font.deriveFont(Font.PLAIN, 17));
+        passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
         passwordField.setEchoChar((char) 0);
     }
 
-    private void NcLoginButton(Font banglaFont) {
+    private void NcLoginButton() {
         JButton NcLoginButton = new JButton("প্রবেশ করুন");
         NcLoginButton.setBounds(385, 260, 132, 44);
         NcLoginButton.setForeground(Color.BLACK);
@@ -187,14 +186,29 @@ public class NcLoginPage extends JFrame {
 
             // Check if the ResultSet contains any data
             if (resultSetId.next() && resultSetPass.next()) {
-                new NcHomepage();
-                dispose();
+                    ValidationErrorText.setText("একাউন্টে প্রবেশ করা হচ্ছে");
+                    ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
+
+                // Start a separate thread to wait for 2 seconds
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    SwingUtilities.invokeLater(() -> { //without SwingUtilities the page not show
+                        new NcHomepage();
+                        dispose();
+                    });
+                }).start();
             }
             else {
                 ValidationErrorText.setText("ভুল! সঠিক আইডি ও পাসওয়ার্ড দিন");
+                ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
             }
         } catch (SQLException exception) {
             ValidationErrorText.setText("কোড এর এস-কিউ-এল ভুল আছে");
+            ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
         }
     }
 

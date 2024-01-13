@@ -3,6 +3,8 @@ import java.awt.*;
 import java.io.*;
 
 public class VotingPage extends JFrame {
+    private final Font banglaFont = loadBanglaFont(); // Load Bangla banglaFont
+    private JRadioButton radioButton = PrarthiTextWithRadioButton(); // need when connect with database
 
     public VotingPage(){
         setLayout(null);
@@ -12,66 +14,19 @@ public class VotingPage extends JFrame {
         setTitle("ভোট প্রদান");
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(0xFFFFFF));
-
-        Font banglaFont = loadBanglaFont();
-        BackButton1(banglaFont);
-        voteButton(banglaFont);
-        cancelButton(banglaFont);
-        addTextField(banglaFont);
-
-        JRadioButton radioButton1 = addTextWithRadioButton(banglaFont);
+        SignOutButton();
+        voteButton();
+        VoteDeleteButton();
+        HeadingText();
     }
     private Font loadBanglaFont() {
         try {
-            return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.PLAIN, 14);
+            return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.PLAIN, 17);
         } catch (FontFormatException | IOException e) {
             return new Font("Arial", Font.PLAIN, 14); // Fallback to a default font
         }
     }
-    private void BackButton1(Font banglaFont) {
-        JButton BackButton1 = new JButton("প্রস্থান");
-        BackButton1.setBounds(520, 7, 71, 37);
-        BackButton1.setForeground(Color.WHITE);
-        BackButton1.setFont(banglaFont.deriveFont(Font.BOLD, 16));
-        BackButton1.setBackground(new Color(0xFF0000));
-
-        BackButton1.addActionListener(e -> {
-            MainPage loginFrame = new MainPage();
-            loginFrame.setVisible(true);
-            dispose();
-        });
-
-        add(BackButton1);
-    }
-
-    private void voteButton(Font banglaFont) {
-        JButton voteButton = new JButton("ভোট দিন");
-        voteButton.setBounds(142, 300, 149, 42);
-        voteButton.setForeground(Color.WHITE);
-        voteButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
-        voteButton.setBackground(new Color(0x045703));
-
-        voteButton.addActionListener(e -> {
-
-        });
-
-
-        add(voteButton);
-    }
-    private void cancelButton(Font banglaFont) {
-        JButton cancelButton = new JButton("বাতিল");
-        cancelButton.setBounds(320, 300, 149, 42);
-        cancelButton.setForeground(Color.WHITE);
-        cancelButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
-        cancelButton.setBackground(new Color(0xFF1B1B));
-
-        cancelButton.addActionListener(e -> {
-
-        });
-
-        add(cancelButton);
-    }
-    private void addTextField(Font banglaFont){
+    private void HeadingText(){
 
         JPanel jPanel = new JPanel();
         jPanel.setBounds(165, 45, 270, 30);
@@ -85,8 +40,55 @@ public class VotingPage extends JFrame {
 
         jPanel.add(label1);
     }
-    private JRadioButton addTextWithRadioButton(Font banglaFont) {
-        JRadioButton radioButton = new JRadioButton("১নং প্রার্থীর নাম");
+    private void SignOutButton() {
+        JButton SignOutButton = new JButton("প্রস্থান");
+        SignOutButton.setBounds(520, 7, 71, 37);
+        SignOutButton.setForeground(Color.WHITE);
+        SignOutButton.setFont(banglaFont.deriveFont(Font.BOLD, 16));
+        SignOutButton.setBackground(new Color(0xFF0000));
+
+        SignOutButton.addActionListener(e -> {
+            MainPage loginFrame = new MainPage();
+            loginFrame.setVisible(true);
+            dispose();
+        });
+
+        add(SignOutButton);
+    }
+
+    private void voteButton() {
+        JButton voteButton = new JButton("ভোট দিন");
+        voteButton.setBounds(142, 300, 149, 42);
+        voteButton.setForeground(Color.WHITE);
+        voteButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
+        voteButton.setBackground(new Color(0x045703));
+
+        voteButton.addActionListener(e -> {
+            
+            //catch database that table row or colum and count++ 
+
+        });
+
+
+        add(voteButton);
+    }
+    private void VoteDeleteButton() {
+        JButton VoteDeleteButton = new JButton("বাতিল");
+        VoteDeleteButton.setBounds(320, 300, 149, 42);
+        VoteDeleteButton.setForeground(Color.WHITE);
+        VoteDeleteButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
+        VoteDeleteButton.setBackground(new Color(0xFF1B1B));
+
+        VoteDeleteButton.addActionListener(e -> {
+            
+            //catch database and delete the table
+
+        });
+
+        add(VoteDeleteButton);
+    }
+    private JRadioButton PrarthiTextWithRadioButton() {
+        radioButton = new JRadioButton("১নং প্রার্থীর নাম");
         radioButton.setBounds(175, 90, 250, 25);
         radioButton.setFont(banglaFont.deriveFont(Font.BOLD, 15));
         radioButton.setBackground(new Color(0xA7FFAA));

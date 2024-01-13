@@ -9,6 +9,7 @@ public class NcHomepage extends JFrame {
     private JTextField Nid; //need when database connect
     private JTextField MobileNumber;//need when database connect
     private JTextField Protik;//need when database connect
+    private final Font banglaFont = loadBanglaFont(); // Load Bangla banglaFont
     public NcHomepage() {
 
         setLayout(null);
@@ -24,12 +25,11 @@ public class NcHomepage extends JFrame {
         Image.setBounds(23, 62, 263, 237);
         add(Image);
 
-        Font banglaFont = loadBanglaFont();
-        HomeButton(banglaFont);
-        SubmitButton(banglaFont);
-        ElectionResultButton(banglaFont);
-        textFields(banglaFont);
-        HeadingText(banglaFont);
+        HomeButton();
+        SubmitButton();
+        ElectionResultButton();
+        textFields();
+        HeadingText();
         addMouseListener(new java.awt.event.MouseAdapter() {// Request focus for the main panel to start without initial selection
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked();
@@ -40,7 +40,7 @@ public class NcHomepage extends JFrame {
     private void formMouseClicked() {
         getContentPane().requestFocusInWindow();
     }
-    private void HeadingText(Font banglaFont) {
+    private void HeadingText() {
         JLabel HeadingText = new JLabel();
         HeadingText.setText("নির্বাচন কমিশন বিভাগ");
         HeadingText.setBounds(216,15,179,24);
@@ -54,19 +54,19 @@ public class NcHomepage extends JFrame {
         } catch (FontFormatException | IOException e) {
             return new Font("Arial", Font.PLAIN, 18);
         }}
-    private void textFields(Font font) {
-        Name = createTextField("প্রার্থীর সম্পূর্ণ নাম", 63, font);
-        Nid = createTextField("প্রার্থীর এন আই ডি নাম্বার", 113, font);
-        Address = createTextField("প্রার্থীর ঠিকানা", 163, font);
-        MobileNumber = createTextField("প্রার্থীর মোবাইল নাম্বার", 213, font);
-        Protik = createTextField("প্রার্থীর প্রতীক", 263, font);
+    private void textFields() {
+        Name = createTextField("প্রার্থীর সম্পূর্ণ নাম", 63);
+        Nid = createTextField("প্রার্থীর এন আই ডি নাম্বার", 113);
+        Address = createTextField("প্রার্থীর ঠিকানা", 163);
+        MobileNumber = createTextField("প্রার্থীর মোবাইল নাম্বার", 213);
+        Protik = createTextField("প্রার্থীর প্রতীক", 263);
     }
-    private JTextField createTextField(String hintText, int y, Font font) {
+    private JTextField createTextField(String hintText, int y) {
         JTextField textField = new JTextField(hintText);
         textField.setBounds(312, y, 227, 37);
         textField.setBackground(Color.white);
         textField.setForeground(Color.GRAY);
-        textField.setFont(font);
+        textField.setFont(banglaFont.deriveFont(Font.BOLD, 17));
         textField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -86,7 +86,7 @@ public class NcHomepage extends JFrame {
         add(textField);
         return textField;
     }
-    private void HomeButton(Font banglaFont) {
+    private void HomeButton() {
         JButton HomeButton = new JButton("প্রস্থান");
         HomeButton.setBounds(10, 8, 70, 35);
         HomeButton.setForeground(Color.WHITE);
@@ -103,35 +103,31 @@ public class NcHomepage extends JFrame {
     }
 
 
-    private void SubmitButton(Font banglaFont) {
-        JButton LogButton1 = new JButton("সংরক্ষণ");
-        LogButton1.setBounds(373, 310, 102, 44);
-        LogButton1.setForeground(Color.BLACK);
-        LogButton1.setFont(banglaFont.deriveFont(Font.BOLD, 20));
-        LogButton1.setBackground(new Color(0x5FFF95));
+    private void SubmitButton() {
+        JButton ResultButton = new JButton("সংরক্ষণ");
+        ResultButton.setBounds(373, 310, 102, 44);
+        ResultButton.setForeground(Color.BLACK);
+        ResultButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
+        ResultButton.setBackground(new Color(0x5FFF95));
 
-        LogButton1.addActionListener(e -> {
-            // Send data to Firebase using textField1.getText() and passwordField.getPassword()
-
-            dispose();
+        ResultButton.addActionListener(e -> {
+            // Send data
         });
 
-        add(LogButton1);
+        add(ResultButton);
     }
-    private void ElectionResultButton(Font banglaFont) {
-        JButton LogButton1 = new JButton("নির্বাচনী ফলাফল");
-        LogButton1.setBounds(72, 310, 159, 44);
-        LogButton1.setForeground(Color.WHITE);
-        LogButton1.setFont(banglaFont.deriveFont(Font.BOLD, 20));
-        LogButton1.setBackground(new Color(0x037C5A));
+    private void ElectionResultButton() {
+        JButton ResultButton = new JButton("নির্বাচনী ফলাফল");
+        ResultButton.setBounds(72, 310, 159, 44);
+        ResultButton.setForeground(Color.WHITE);
+        ResultButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
+        ResultButton.setBackground(new Color(0x037C5A));
 
-        LogButton1.addActionListener(e -> {
-            // Send data to Firebase using textField1.getText() and passwordField.getPassword()
-
-            dispose();
+        ResultButton.addActionListener(e -> {
+            // Send data
         });
 
-        add(LogButton1);
+        add(ResultButton);
     }
 
     public static void main(String[] args) {
