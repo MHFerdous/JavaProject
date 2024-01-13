@@ -14,7 +14,7 @@ public class login1 extends JFrame {
         getContentPane().setBackground(new Color(0x007355));
 
         // Add image
-        ImageIcon imageIcon = new ImageIcon("F:/Study files/JavaProject/img/nirbacon_commison.png");
+        ImageIcon imageIcon = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/nirbacon_commison.png");
         JLabel imageLabel = new JLabel(imageIcon);
         imageLabel.setBounds(0, 0, 306, 360);
         add(imageLabel);
@@ -34,7 +34,7 @@ public class login1 extends JFrame {
         getContentPane().requestFocusInWindow();
     }
     private void HomeButton() {
-        JButton homeButton = new JButton(new ImageIcon("F:/Study files/JavaProject/img/home-icon.jpg"));
+        JButton homeButton = new JButton(new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/home-icon.jpg"));
         homeButton.setBounds(314, 10, 20, 20);
         homeButton.setBorderPainted(false);
         homeButton.setContentAreaFilled(false);
@@ -53,7 +53,7 @@ public class login1 extends JFrame {
     }
     private Font loadBanglaFont() {
         try {
-            return Font.createFont(Font.TRUETYPE_FONT, new File("F:/Study files/JavaProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.PLAIN, 14);
+            return Font.createFont(Font.TRUETYPE_FONT, new File("/Users/hrkja/OneDrive/Desktop/evmProject/BanglaFont/Nikosh.ttf")).deriveFont(Font.PLAIN, 14);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
             return new Font("Arial", Font.PLAIN, 14); // Fallback to a default font
