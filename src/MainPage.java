@@ -6,6 +6,7 @@ import java.io.*;
 public class MainPage extends JFrame {
     private final JRadioButton radioButton1;
     private final JRadioButton radioButton2;
+    private final Font banglaFont = loadBanglaFont(); // Load Bangla banglaFont
     
     public MainPage() {
         setLayout(null);
@@ -16,9 +17,6 @@ public class MainPage extends JFrame {
         setLocationRelativeTo(null); // window open in center
         getContentPane().setBackground(new Color(0x007355));
 
-        
-        Font banglaFont = loadBanglaFont(); // Load Bangla font
-
         // Add image
         ImageIcon MainImage = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/nirbacon_commison.png");
         JLabel Image = new JLabel(MainImage);
@@ -26,9 +24,9 @@ public class MainPage extends JFrame {
         add(Image);
 
         // Add text with radio buttons
-        radioButton1 = addTextWithRadioButton("নির্বাচন কমিশন", 127, banglaFont);
-        radioButton2 = addTextWithRadioButton("ভোটার", 178, banglaFont);
-        SubmitButton(banglaFont);
+        radioButton1 = addTextWithRadioButton("নির্বাচন কমিশন", 127);
+        radioButton2 = addTextWithRadioButton("ভোটার", 178);
+        SubmitButton();
     }
 
     private Font loadBanglaFont() {
@@ -39,7 +37,7 @@ public class MainPage extends JFrame {
         }
     }
 
-    private JRadioButton addTextWithRadioButton(String text, int y, Font banglaFont) {
+    private JRadioButton addTextWithRadioButton(String text, int y) {
         JRadioButton radioButton = new JRadioButton(text);
         radioButton.setBounds(393, y, 200, 24);
         radioButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
@@ -57,7 +55,7 @@ public class MainPage extends JFrame {
         return radioButton;
     }
 
-    private void SubmitButton(Font banglaFont) {
+    private void SubmitButton() {
         JButton SubmitButton = new JButton("এগিয়ে যান");
         SubmitButton.setBounds(398, 240, 132, 44);
         SubmitButton.setForeground(Color.BLACK);
