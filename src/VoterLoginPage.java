@@ -203,18 +203,16 @@ public class VoterLoginPage extends JFrame {
                 ValidationErrorText.setText("একাউন্টে প্রবেশ করা হচ্ছে");
                 ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
 
-                // Start a separate thread to wait for 2 seconds
-                new Thread(() -> {
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    SwingUtilities.invokeLater(() -> { //without SwingUtilities the page not show
+                // wait for 2 seconds
+                Timer timer = new Timer(2000, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
                         new VotingPage();
                         dispose();
-                    });
-                }).start();
+                    }
+                });
+                timer.setRepeats(false); // execute the action only once
+                timer.start();
             } else {
                 ValidationErrorText.setText("ভুল! সঠিক আইডি ও পাসওয়ার্ড দিন");
                 ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
