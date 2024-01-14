@@ -36,7 +36,6 @@ public class VotingPage extends JFrame {
         JLabel label1 = new JLabel("আপনার পছন্দের প্রার্থীকে নির্বাচন করুন");
         label1.setFont(banglaFont.deriveFont(Font.BOLD, 20));
         label1.setForeground(Color.black);
-        label1.setBounds(195, 40, 319, 24);
 
         jPanel.add(label1);
     }

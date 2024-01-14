@@ -45,9 +45,9 @@ public class NcLoginPage extends JFrame {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/nirbacon_commission", "root", "");
         } catch (ClassNotFoundException e) {
-        String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি</p></html>";
-        JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
-        System.exit(1);
+            String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি</p></html>";
+            JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
         } catch (SQLException e) {
             String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>ডাটাবেসে সংযোগ স্থাপন করা যায়নি</p></html>";
             JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
@@ -171,43 +171,35 @@ public class NcLoginPage extends JFrame {
         NcLoginButton.addActionListener(e -> LoginDatabase());
     }
     private void LoginDatabase() {
-        String idValue = idField.getText();
-        char[] passwordValue = passwordField.getPassword();
 
-        String idReadSQL = "SELECT NcId FROM nclogin WHERE NcId = ?";
-        String passReadSQL = "SELECT NcPass FROM nclogin WHERE NcPass = ?";
+        try {
+            String idValue = idField.getText();
+            char[] passwordValue = passwordField.getPassword();
 
-        try (PreparedStatement preparedStatementId = connection.prepareStatement(idReadSQL);
-             PreparedStatement preparedStatementPass = connection.prepareStatement(passReadSQL)) {
+            String query = "SELECT NcId, NcPass FROM nclogin WHERE NcId = ? AND NcPass = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, idValue);
+                preparedStatement.setString(2, String.valueOf(passwordValue));
 
-            preparedStatementId.setString(1, idValue);
-            preparedStatementPass.setString(1, String.valueOf(passwordValue));
+                ResultSet resultSet = preparedStatement.executeQuery();
 
-            ResultSet resultSetId = preparedStatementId.executeQuery();
-            ResultSet resultSetPass = preparedStatementPass.executeQuery();
-
-            // Check if the ResultSet contains any data
-            if (resultSetId.next() && resultSetPass.next()) {
+                if (resultSet.next()) {
                     ValidationErrorText.setText("একাউন্টে প্রবেশ করা হচ্ছে");
                     ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
 
-                // wait for 2 seconds
-                Timer timer = new Timer(2000, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
+                    Timer timer = new Timer(2000, e -> {
                         new NcHomepage();
                         dispose();
-                    }
-                });
-                timer.setRepeats(false); // execute the action only once
-                timer.start();
-            }
-            else {
-                ValidationErrorText.setText("ভুল! সঠিক আইডি ও পাসওয়ার্ড দিন");
-                ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
+                } else {
+                    ValidationErrorText.setText("ভুল! সঠিক আইডি ও পাসওয়ার্ড দিন");
+                    ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
+                }
             }
         } catch (SQLException exception) {
-            ValidationErrorText.setText("কোড এর এস-কিউ-এল ভুল আছে");
+            ValidationErrorText.setText("ডেটাবেস কুয়েরি ত্রুটি");
             ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
         }
     }

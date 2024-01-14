@@ -20,7 +20,7 @@ public class VoterSignup extends JFrame {
         getContentPane().setBackground(new Color(0x007355));
         setLayout(null);
         setImageIcons();
-        homeButton();
+        BackButton();
         textFields();
         signupButton();
         addMouseListener(new java.awt.event.MouseAdapter() {// Request focus for the main panel to start without initial selection
@@ -123,16 +123,15 @@ public class VoterSignup extends JFrame {
         passTxtF.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
         passTxtF.setEchoChar((char) 0);
     }
-    private void homeButton() {
+    private void BackButton() {
         ImageIcon homeIconButton = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/home-icon.jpg");
-        JButton homeButton = new JButton(homeIconButton);
-        homeButton.setBounds(317, 10, 22, 22);
-        add(homeButton);
+        JButton BackButton = new JButton(homeIconButton);
+        BackButton.setBounds(317, 10, 22, 22);
+        add(BackButton);
 
-        homeButton.addActionListener(e -> {
-            MainPage frame = new MainPage();
+        BackButton.addActionListener(e -> {
+            new VoterLoginPage();
             dispose();
-            frame.setVisible(true);
         });
     }
     private void signupButton() {

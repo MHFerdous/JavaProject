@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.sql.SQLException;
 
 public class NcHomepage extends JFrame {
     private JTextField Address; //need when database connect
@@ -126,7 +127,12 @@ public class NcHomepage extends JFrame {
         ResultButton.setBackground(new Color(0x037C5A));
 
         ResultButton.addActionListener(e -> {
-            // Send data
+            try {
+                new Result();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            dispose();
         });
 
         add(ResultButton);
