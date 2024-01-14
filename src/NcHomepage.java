@@ -227,7 +227,10 @@ public class NcHomepage extends JFrame {
     }
 
     public static void main(String[] args) {
-        NcHomepage a = new NcHomepage();
-        a.setVisible(true);
+        new NcHomepage();//add comment this and above setVisible(true); line - if below line is active
+
+        //To run this page remove comment
+//        NcHomepage frame = new NcHomepage();
+//        frame.setVisible(true);
     }
 }
