@@ -42,12 +42,14 @@ public class VoterLoginPage extends JFrame {
         getContentPane().requestFocusInWindow();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/nirbabon_commission", "root", "");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/nirbacon_commission", "root", "");
         } catch (ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(this, "MySQL JDBC Driver not found!", "Error", JOptionPane.ERROR_MESSAGE);
+            String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি</p></html>";
+            JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error connecting to the database", "Error", JOptionPane.ERROR_MESSAGE);
+            String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>ডাটাবেসে সংযোগ স্থাপন করা যায়নি</p></html>";
+            JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
     }
@@ -171,9 +173,9 @@ public class VoterLoginPage extends JFrame {
     }
     private void VoterSignupButton() {
         JButton VoterSignupButton = new JButton("নিবন্ধন করুন");
-        VoterSignupButton.setBounds(490, 10, 92, 34);
+        VoterSignupButton.setBounds(490, 10, 92, 35);
         VoterSignupButton.setForeground(Color.BLACK);
-        VoterSignupButton.setFont(banglaFont.deriveFont(Font.BOLD, 16));
+        VoterSignupButton.setFont(banglaFont.deriveFont(Font.BOLD, 13));
         VoterSignupButton.setBackground(new Color(0xFFFFFF));
         VoterSignupButton.addActionListener(e -> {
             new VoterSignup();

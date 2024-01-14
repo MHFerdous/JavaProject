@@ -43,6 +43,7 @@ public class NcHomepage extends JFrame {
     private void HeadingText() {
         JLabel HeadingText = new JLabel();
         HeadingText.setText("নির্বাচন কমিশন বিভাগ");
+        HeadingText.setForeground(Color.black);
         HeadingText.setBounds(216,15,179,24);
         HeadingText.setFont(banglaFont.deriveFont(Font.BOLD, 24));
         add(HeadingText);
@@ -104,11 +105,12 @@ public class NcHomepage extends JFrame {
 
 
     private void SubmitButton() {
-        JButton ResultButton = new JButton("সংরক্ষণ");
-        ResultButton.setBounds(373, 310, 102, 44);
+        JButton ResultButton = new JButton("মনোনয়ন দাখিল");
+        ResultButton.setBounds(353, 310, 145, 44);
         ResultButton.setForeground(Color.BLACK);
         ResultButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
         ResultButton.setBackground(new Color(0x5FFF95));
+
 
         ResultButton.addActionListener(e -> {
             // Send data
