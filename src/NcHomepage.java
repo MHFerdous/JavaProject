@@ -19,7 +19,7 @@ public class NcHomepage extends JFrame {
     private JTextField Nid; // need when database connect
     private JTextField MobileNumber;// need when database connect
     private JTextField Protik;// need when database connect
-    private JLabel ValidationErrorText;
+    private JLabel ValidationErrorText, ErrorText;;
     private final Font banglaFont = loadBanglaFont(); // Load Bangla font
 
     private Connection connection;
@@ -96,21 +96,31 @@ public class NcHomepage extends JFrame {
         textField.setFont(banglaFont.deriveFont(Font.BOLD, 17));
 
         textField.addFocusListener(new FocusListener() {
-            @Override
             public void focusGained(FocusEvent e) {
                 if (textField.getText().equals(hintText)) {
                     textField.setText("");
                     textField.setForeground(Color.BLACK);
                 }
+                ErrorText.setText("");
             }
 
             @Override
             public void focusLost(FocusEvent e) {
+                ErrorText = new JLabel("পূরণ করুন");
+                ErrorText.setBounds(480, y + 30, 227, 37);
+                add(ErrorText);
+                ErrorText.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
+                setComponentZOrder(ErrorText, 0);
+
                 if (textField.getText().isEmpty()) {
                     textField.setText(hintText);
                     textField.setForeground(Color.GRAY);
+                    ErrorText.setForeground(Color.RED);
+                } else {
+                    ErrorText.setVisible(false); // Hide ErrorText if there's text
                 }
             }
+
         });
 
         textField.addKeyListener(new KeyAdapter() {
@@ -138,7 +148,7 @@ public class NcHomepage extends JFrame {
             ValidationErrorText.setText(text);
             ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 16));
             return false;
-        } else {
+        }  else {
             ValidationErrorText.setText(null);
             return true;
         }
@@ -230,6 +240,7 @@ public class NcHomepage extends JFrame {
         add(ValidationErrorText);
         ValidationErrorText.setForeground(Color.RED);
     }
+
 
     public static void main(String[] args) {
         //new NcHomepage();//add comment this and above setVisible(true); line - if below line is active
