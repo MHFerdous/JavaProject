@@ -81,24 +81,14 @@ public class NcHomepage extends JFrame {
     }
 
     private void textFields() {
-        Name = createTextField("প্রার্থীর সম্পূর্ণ নাম", 63, textField -> {
-            validateTextField(textField, "[০-৯0-9]+", "সংখ্যা না");//change this
-        });
-        Nid = createTextField("প্রার্থীর এন আই ডি নাম্বার", 113, textField -> {
-            validateTextField(textField, "[০-৯0-9]+", "সংখ্যা");//change this
-        });
-        Address = createTextField("প্রার্থীর ঠিকানা", 163, textField -> {
-            validateTextField(textField, "[০-৯0-9]+","ঠিকানা" );//change this
-        });
-        MobileNumber = createTextField("প্রার্থীর মোবাইল নাম্বার", 213, textField -> {
-            validateTextField(textField, "[০-৯0-9]+","মোবাইল");//change this
-        });
-        Protik = createTextField("প্রার্থীর প্রতীক", 263, textField -> {
-            validateTextField(textField, "[০-৯0-9]+","সংখ্যা না");//change this
-        });
+        Name = createTextField("প্রার্থীর সম্পূর্ণ নাম", 63, "[০-৯0-9]+", "সংখ্যা না");
+        Nid = createTextField("প্রার্থীর এন আই ডি নাম্বার", 113, "[০-৯0-9]+", "সংখ্যা");
+        Address = createTextField("প্রার্থীর ঠিকানা", 163, "[a-zআ-ওক-য়]+", "ঠিকানা");
+        MobileNumber = createTextField("প্রার্থীর মোবাইল নাম্বার", 213, "[০-৯0-9]+", "মোবাইল");
+        Protik = createTextField("প্রার্থীর প্রতীক", 263, "[০-৯0-9]+", "সংখ্যা না");
     }
 
-    private JTextField createTextField(String hintText, int y, Consumer<JTextField> validationFunction) {
+    private JTextField createTextField(String hintText, int y, String pattern, String errorText) {//ono pattern and errorText catch korsi karon jate live error dekhaite pari. ono  textField.addKeyListener use kora hoise.
         JTextField textField = new JTextField(hintText);
         textField.setBounds(312, y, 227, 37);
         textField.setBackground(Color.white);
@@ -126,7 +116,7 @@ public class NcHomepage extends JFrame {
         textField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                validationFunction.accept(textField);
+                validateTextField(textField, pattern, errorText);//live error dekhaibo jokhono vul input dimu. ota add na korle button a click korle then error dekhte parlam one so ota problem. that's why live error show korar lagi ota use hoise.
             }
         });
 
@@ -134,16 +124,43 @@ public class NcHomepage extends JFrame {
         return textField;
     }
 
-    private void validateTextField(JTextField textField, String pattern, String text) {
+    private boolean validateAllFields() {
+        return validateTextField(Name, "[০-৯0-9]+", "সংখ্যা না") &&
+                validateTextField(Nid, "[০-৯0-9]+", "সংখ্যা") &&
+                validateTextField(Address, "[a-zআ-ওক-য়]+", "ঠিকানা") &&
+                validateTextField(MobileNumber, "[০-৯0-9]+", "মোবাইল") &&
+                validateTextField(Protik, "[০-৯0-9]+", "সংখ্যা না");
+    }
+    private boolean validateTextField(JTextField textField, String pattern, String text) { // boolean validateAllFields method tone sob abar same pattarn and text catch korsi jate submit button a click korle aye boolen method call hoya check kore sob true ase ni.
         Pattern check = Pattern.compile(pattern);
         Matcher matcher = check.matcher(textField.getText());
-
         if (!matcher.matches()) {
             ValidationErrorText.setText(text);
             ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 16));
+            return false;
         } else {
             ValidationErrorText.setText(null);
+            return true;
         }
+    }
+    private void SubmitButton() {
+        JButton ResultButton = new JButton("মনোনয়ন দাখিল");
+        ResultButton.setBounds(353, 310, 145, 44);
+        ResultButton.setForeground(Color.BLACK);
+        ResultButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
+        ResultButton.setBackground(new Color(0x5FFF95));
+
+        ResultButton.addActionListener(e -> {
+            if (validateAllFields()) {//boolean method a giya dekbo sob true ni. hoile save korbo
+                saveToDatabase();
+            }
+            else {
+                ValidationErrorText.setText("দুঃখিত! তথ্য সঠিকভাবে প্রদান করুন");
+                ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 16));
+            }
+        });
+
+        add(ResultButton);
     }
     private void saveToDatabase() {
         try {
@@ -205,19 +222,7 @@ public class NcHomepage extends JFrame {
 
         add(HomeButton);
     }
-    private void SubmitButton() {
-        JButton ResultButton = new JButton("মনোনয়ন দাখিল");
-        ResultButton.setBounds(353, 310, 145, 44);
-        ResultButton.setForeground(Color.BLACK);
-        ResultButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
-        ResultButton.setBackground(new Color(0x5FFF95));
 
-        ResultButton.addActionListener(e -> {
-            saveToDatabase();
-        });
-
-        add(ResultButton);
-    }
 
     private void ValidationErrorText(){
         ValidationErrorText = new JLabel();
@@ -227,10 +232,10 @@ public class NcHomepage extends JFrame {
     }
 
     public static void main(String[] args) {
-        new NcHomepage();//add comment this and above setVisible(true); line - if below line is active
+        //new NcHomepage();//add comment this and above setVisible(true); line - if below line is active
 
         //To run this page remove comment
-//        NcHomepage frame = new NcHomepage();
-//        frame.setVisible(true);
+        NcHomepage frame = new NcHomepage();
+        frame.setVisible(true);
     }
 }
