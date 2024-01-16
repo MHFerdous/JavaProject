@@ -71,15 +71,15 @@ public class VoterSignup extends JFrame {
     }
 
     private void textFields() {
-        nameTxtF = createTextField("সম্পূর্ণ নাম", 51,"^[a-zA-Zঅ-ঔক-ৎ]$","সঠিক নাম বাংলায়/ইংরেজিতে প্রদান করুন");
-        nidTxtF = createTextField("এন আই ডি নাম্বার", 101,"^[0-9০-৯]{10}$","সঠিক এন আই ডি নাম্বার প্রদান করুন");
+        nameTxtF = createTextField("সম্পূর্ণ নাম", 51,"^[a-zA-Z ]+|[অ-ঔক-ৎ ]+$","সঠিক নাম বাংলায় / ইংরেজিতে প্রদান করুন");
+        nidTxtF = createTextField("এন আই ডি নাম্বার", 101,"^[0-9০-৯]{10}$","১০ ডিজিটের জাতীয় পরিচয়পত্র নম্বর দিন");
         passTxtF = createPasswordField();
         emailTxtF = createTextField("ই-মেইল", 201,"^[a-z0-9]+@gmail\\.com$","সঠিক ই-মেইল প্রদান করুন");
-        mobileTxtF = createTextField("মোবাইল নাম্বার", 251,"^((\\+88)?01[2-9]\\d{8})|((\\+৮৮)?০১[২-৯][০-৯]{8})$","সঠিক মোবাইল নাম্বার প্রদান করুন");
+        mobileTxtF = createTextField("মোবাইল নাম্বার", 251,"^((\\+88)?01[2-9]\\d{8})|((\\+৮৮)?০১[২-৯][০-৯]{8})$","+৮৮০ সহ বা ছাড়া ১১ ডিজিটের নম্বর দিন");
         passwordField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                passcreatePasswordField();
+                passcreatePasswordField();//live error dekhaibo jokhono vul input dimu. ota add na korle button a click korle then error dekhte parlam one so ota problem. that's why live error show korar lagi ota use hoise.
             }
         });
     }
@@ -202,7 +202,7 @@ public class VoterSignup extends JFrame {
     private void BackButton() {
         ImageIcon homeIconButton = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/home-icon.jpg");
         JButton BackButton = new JButton(homeIconButton);
-        BackButton.setBounds(317, 10, 22, 22);
+        BackButton.setBounds(312, 5, 22, 22);
         add(BackButton);
 
         BackButton.addActionListener(e -> {
@@ -222,7 +222,7 @@ public class VoterSignup extends JFrame {
 
     private void ValidationErrorText(){
         ValidationErrorText = new JLabel();
-        ValidationErrorText.setBounds(337, 25, 227, 37);
+        ValidationErrorText.setBounds(336, 23, 230, 37);
         add(ValidationErrorText);
         ValidationErrorText.setForeground(Color.WHITE);
     }
