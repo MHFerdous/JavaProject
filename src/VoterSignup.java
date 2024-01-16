@@ -5,26 +5,12 @@ import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
-
-/*
-"^[a-zA-Zঅ-ঔক-ৎ]$","সঠিক নাম বাংলায়/ইংরেজিতে প্রদান করুন"
-"^[0-9০-৯]{10}$","সঠিক এন আই ডি নাম্বার প্রদান করুন"
-"^[a-z0-9]+@gmail\\.com$","সঠিক ই-মেইল প্রদান করুন"
-"^((\\+88)?01[2-9]\\d{8})|((\\+৮৮)?০১[২-৯][০-৯]{8})$","সঠিক মোবাইল নাম্বার প্রদান করুন"
-passRegex     (?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).{8,}
- */
-
-
 public class VoterSignup extends JFrame {
-    private JPasswordField passTxtF; //need when database connect
-    private JTextField nameTxtF; //need when database connect
-    private JTextField nidTxtF; //need when database connect
-    private JTextField emailTxtF;//need when database connect
-    private JTextField mobileTxtF;//need when database connect
+    private JTextField nameTxtF,nidTxtF,emailTxtF,mobileTxtF;//need when database connect
     private JLabel ValidationErrorText;
     private final Font banglaFont = loadBanglaFont(); // Load Bangla banglaFont
     private JPasswordField passwordField;
+    private JLabel ErrorText;
     public VoterSignup() {
         setSize(612, 400);
         setTitle("ভোটার নিবন্ধন");
@@ -38,7 +24,7 @@ public class VoterSignup extends JFrame {
         BackButton();
         textFields();
         signupButton();
-        ValidationErrorText();
+        ValidErrorText();
 
         addMouseListener(new java.awt.event.MouseAdapter() {// Request focus for the main panel to start without initial selection
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -71,17 +57,12 @@ public class VoterSignup extends JFrame {
     }
 
     private void textFields() {
-        nameTxtF = createTextField("সম্পূর্ণ নাম", 51,"^[a-zA-Z ]+|[অ-ঔক-ৎ ]+$","সঠিক নাম বাংলায় / ইংরেজিতে প্রদান করুন");
+        nameTxtF = createTextField("সম্পূর্ণ নাম", 51,"^[a-zA-Z ]+|[অ-ঔক-য়\\s]+$","সঠিক নাম বাংলায় / ইংরেজিতে প্রদান করুন");
         nidTxtF = createTextField("এন আই ডি নাম্বার", 101,"^[0-9০-৯]{10}$","১০ ডিজিটের জাতীয় পরিচয়পত্র নম্বর দিন");
-        passTxtF = createPasswordField();
+        passwordField = createPasswordField();
         emailTxtF = createTextField("ই-মেইল", 201,"^[a-z0-9]+@gmail\\.com$","সঠিক ই-মেইল প্রদান করুন");
         mobileTxtF = createTextField("মোবাইল নাম্বার", 251,"^((\\+88)?01[2-9]\\d{8})|((\\+৮৮)?০১[২-৯][০-৯]{8})$","+৮৮০ সহ বা ছাড়া ১১ ডিজিটের নম্বর দিন");
-        passwordField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                passcreatePasswordField();//live error dekhaibo jokhono vul input dimu. ota add na korle button a click korle then error dekhte parlam one so ota problem. that's why live error show korar lagi ota use hoise.
-            }
-        });
+
     }
 
     private JTextField createTextField( String hintText, int y, String regex, String errorText) {
@@ -99,12 +80,21 @@ public class VoterSignup extends JFrame {
                     textField.setText("");
                     textField.setForeground(Color.BLACK);
                 }
+                ErrorText.setText("");
             }
             @Override
             public void focusLost(FocusEvent e) {
+                ErrorText = new JLabel("পূরণ করুন");
+                ErrorText.setBounds(500, y + 32, 227, 37);
+                add(ErrorText);
+                ErrorText.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
+                setComponentZOrder(ErrorText, 0);
                 if (textField.getText().isEmpty()) {
                     textField.setText(hintText);
                     textField.setForeground(Color.GRAY);
+                    ErrorText.setForeground(Color.RED);
+                } else {
+                    ErrorText.setVisible(false); // Hide ErrorText if there's text
                 }
             }
         });
@@ -121,39 +111,34 @@ public class VoterSignup extends JFrame {
     }
 
 
-    private boolean validateAllFields() {
-        return validateTextField(nameTxtF,"^[a-zA-Zঅ-ঔক-ৎ]$","সঠিক নাম বাংলায়/ইংরেজিতে প্রদান করুন") &&
-                validateTextField(nidTxtF,"^[0-9০-৯]{10}$","সঠিক এন আই ডি নাম্বার প্রদান করুন") &&
-                passcreatePasswordField() &&
-                validateTextField(emailTxtF,"^[a-z0-9]+@gmail\\.com$","সঠিক ই-মেইল প্রদান করুন" ) &&
-                validateTextField(mobileTxtF,"^((\\+88)?01[2-9]\\d{8})|((\\+৮৮)?০১[২-৯][০-৯]{8})$","সঠিক মোবাইল নাম্বার প্রদান করুন" );
-    }
+//    private boolean validateAllFields() {
+//        return validateTextField(nameTxtF,"^[a-zA-Z ]+|[অ-ঔক-য়\s]+$","সঠিক নাম বাংলায়/ইংরেজিতে প্রদান করুন") &&
+//                validateTextField(nidTxtF,"^[0-9০-৯]{10}$","১০ ডিজিটের জাতীয় পরিচয়পত্র নম্বর দিন") &&
+//                validatePassField() &&
+//                validateTextField(emailTxtF,"^[a-z0-9]+@gmail\\.com$","সঠিক ই-মেইল প্রদান করুন" ) &&
+//                validateTextField(mobileTxtF,"^((\\+88)?01[2-9]\\d{8})|((\\+৮৮)?০১[২-৯][০-৯]{8})$","+৮৮০ সহ বা ছাড়া ১১ ডিজিটের নম্বর দিন" );
+//    }
 
-    private boolean validateTextField(JTextField textField, String regex, String errorText) { // boolean validateAllFields method tone sob abar same pattarn and text catch korsi jate submit button a click korle aye boolen method call hoya check kore sob true ase ni.
+    private void validateTextField(JTextField textField, String regex, String errorText) { // boolean validateAllFields method tone sob abar same pattarn and text catch korsi jate submit button a click korle aye boolen method call hoya check kore sob true ase ni.
         Pattern check = Pattern.compile(regex);
         Matcher matcher = check.matcher(textField.getText());
         if (!matcher.matches()) {
             ValidationErrorText.setText(errorText);
             ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 16));
-            return false;
         } else {
             ValidationErrorText.setText(null);
-            return true;
         }
     }
-    private boolean passcreatePasswordField() { // boolean validateAllFields method tone sob abar same pattarn and text catch korsi jate submit button a click korle aye boolen method call hoya check kore sob true ase ni.
+    private void validatePassField() { // boolean validateAllFields method tone sob abar same pattarn and text catch korsi jate submit button a click korle aye boolen method call hoya check kore sob true ase ni.
         Pattern check = Pattern.compile("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).{8,}");
-        char[] enteredPasswordChars = passwordField.getPassword();
-        String enteredPassword = new String(enteredPasswordChars);
-        Matcher matcher = check.matcher(enteredPassword);
+
+        Matcher matcher = check.matcher(passwordField.getText());
         if (!matcher.matches()) {
             ValidationErrorText.setText("সঠিক ভাবে পাসওয়ার্ড প্রদান করুন");
             ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 16));
-            return false;
 
         } else {
             ValidationErrorText.setText(null);
-            return true;
         }
     }
 
@@ -182,7 +167,14 @@ public class VoterSignup extends JFrame {
                     passwordField.setEchoChar((char) 0);
                     passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
                     passwordField.setForeground(Color.GRAY);
+                    ErrorText.setForeground(Color.RED);
                 }
+            }
+        });
+        passwordField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                validatePassField();//live error dekhaibo jokhono vul input dimu. ota add na korle button a click korle then error dekhte parlam one so ota problem. that's why live error show korar lagi ota use hoise.
             }
         });
 
@@ -220,7 +212,7 @@ public class VoterSignup extends JFrame {
         signButton.addActionListener(e -> System.out.println("Signup Button clicked"));
     }
 
-    private void ValidationErrorText(){
+    private void ValidErrorText(){
         ValidationErrorText = new JLabel();
         ValidationErrorText.setBounds(336, 23, 230, 37);
         add(ValidationErrorText);

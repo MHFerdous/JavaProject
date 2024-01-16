@@ -11,14 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.function.Consumer;
 
 public class NcHomepage extends JFrame {
-    private JTextField Address; // need when database connect
-    private JTextField Name; // need when database connect
-    private JTextField Nid; // need when database connect
-    private JTextField MobileNumber;// need when database connect
-    private JTextField Protik;// need when database connect
+    private JTextField Address,Name,Nid,MobileNumber,Protik;// need when database connect
     private JLabel ValidationErrorText, ErrorText;;
     private final Font banglaFont = loadBanglaFont(); // Load Bangla font
 
