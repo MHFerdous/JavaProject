@@ -73,11 +73,11 @@ public class NcHomepage extends JFrame {
     }
 
     private void textFields() {
-        Name = createTextField("প্রার্থীর সম্পূর্ণ নাম", 63, "[০-৯0-9]+", "সংখ্যা না");
-        Nid = createTextField("প্রার্থীর এন আই ডি নাম্বার", 113, "[০-৯0-9]+", "সংখ্যা");
-        Address = createTextField("প্রার্থীর ঠিকানা", 163, "[a-zআ-ওক-য়]+", "ঠিকানা");
-        MobileNumber = createTextField("প্রার্থীর মোবাইল নাম্বার", 213, "[০-৯0-9]+", "মোবাইল");
-        Protik = createTextField("প্রার্থীর প্রতীক", 263, "[০-৯0-9]+", "সংখ্যা না");
+        Name = createTextField("প্রার্থীর সম্পূর্ণ নাম", 63, "^[a-zA-Z ]+|[অ-ঔক-য়\\s]+$","সঠিক নাম বাংলায় / ইংরেজিতে প্রদান করুন");
+        Nid = createTextField("প্রার্থীর এন আই ডি নাম্বার", 113, "^[0-9০-৯]{10}$","১০ ডিজিটের জাতীয় পরিচয়পত্র নম্বর দিন");
+        Address = createTextField("প্রার্থীর ঠিকানা", 163, "^[a-zA-Z0-9 ]+|[০-৯অ-ঔক-য়\\s]+$", "সঠিক ঠিকানা প্রদান করুন");
+        MobileNumber = createTextField("প্রার্থীর মোবাইল নাম্বার", 213, "^((\\+88)?01[2-9]\\d{8})|((\\+৮৮)?০১[২-৯][০-৯]{8})$","+৮৮০ সহ বা ছাড়া ১১ ডিজিটের নম্বর দিন");
+        Protik = createTextField("প্রার্থীর প্রতীক", 263, "^[a-zA-Z ]+|[অ-ঔক-য়\\s]+$","সঠিক প্রতীক নাম বাংলায় / ইংরেজিতে দিন");
     }
 
     private JTextField createTextField(String hintText, int y, String pattern, String errorText) {//ono pattern and errorText catch korsi karon jate live error dekhaite pari. ono  textField.addKeyListener use kora hoise.
@@ -127,11 +127,11 @@ public class NcHomepage extends JFrame {
     }
 
     private boolean validateAllFields() {
-        return validateTextField(Name, "[০-৯0-9]+", "সংখ্যা না") &&
-                validateTextField(Nid, "[০-৯0-9]+", "সংখ্যা") &&
-                validateTextField(Address, "[a-zআ-ওক-য়]+", "ঠিকানা") &&
-                validateTextField(MobileNumber, "[০-৯0-9]+", "মোবাইল") &&
-                validateTextField(Protik, "[০-৯0-9]+", "সংখ্যা না");
+        return validateTextField(Name, "^[a-zA-Z ]+|[অ-ঔক-য়\\s]+$","সঠিক নাম বাংলায় / ইংরেজিতে প্রদান করুন") &&
+                validateTextField(Nid, "^[0-9০-৯]{10}$","১০ ডিজিটের জাতীয় পরিচয়পত্র নম্বর দিন") &&
+                validateTextField(Address, "^[a-zA-Z0-9 ]+|[০-৯অ-ঔক-য়\\s]+$", "সঠিক ঠিকানা প্রদান করুন") &&
+                validateTextField(MobileNumber, "^((\\+88)?01[2-9]\\d{8})|((\\+৮৮)?০১[২-৯][০-৯]{8})$","+৮৮০ সহ বা ছাড়া ১১ ডিজিটের নম্বর দিন") &&
+                validateTextField(Protik, "^[a-zA-Z ]+|[অ-ঔক-য়\\s]+$","সঠিক প্রতীক নাম বাংলায় / ইংরেজিতে দিন");
     }
     private boolean validateTextField(JTextField textField, String pattern, String text) { // boolean validateAllFields method tone sob abar same pattarn and text catch korsi jate submit button a click korle aye boolen method call hoya check kore sob true ase ni.
         Pattern check = Pattern.compile(pattern);

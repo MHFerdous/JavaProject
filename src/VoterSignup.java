@@ -7,10 +7,9 @@ import java.util.regex.Pattern;
 
 public class VoterSignup extends JFrame {
     private JTextField nameTxtF,nidTxtF,emailTxtF,mobileTxtF;//need when database connect
-    private JLabel ValidationErrorText;
+    private JLabel ValidationErrorText,ErrorText;
     private final Font banglaFont = loadBanglaFont(); // Load Bangla banglaFont
     private JPasswordField passwordField;
-    private JLabel ErrorText;
     public VoterSignup() {
         setSize(612, 400);
         setTitle("ভোটার নিবন্ধন");
