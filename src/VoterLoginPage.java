@@ -10,7 +10,6 @@ public class VoterLoginPage extends JFrame {
     private JPasswordField passwordField;
     private JTextField NidField;
     private JLabel ValidationErrorText;
-    private JButton VoterLoginButton;
     private Connection connection;
     private final Font banglaFont = loadBanglaFont(); // Load Bangla banglaFont
     public VoterLoginPage() {
@@ -42,7 +41,7 @@ public class VoterLoginPage extends JFrame {
         getContentPane().requestFocusInWindow();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/nirbacon_commission", "root", "");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/voter_info", "root", "");
         } catch (ClassNotFoundException e) {
             String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি</p></html>";
             JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
@@ -162,14 +161,14 @@ public class VoterLoginPage extends JFrame {
         passwordField.setEchoChar((char) 0);
     }
     private void VoterLoginButton() {
-        VoterLoginButton = new JButton("প্রবেশ করুন");
-        VoterLoginButton.setBounds(385, 260, 132, 44);
-        VoterLoginButton.setForeground(Color.BLACK);
-        VoterLoginButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
-        VoterLoginButton.setBackground(new Color(0x5FFF95));
+        JButton voterLoginButton = new JButton("প্রবেশ করুন");
+        voterLoginButton.setBounds(385, 260, 132, 44);
+        voterLoginButton.setForeground(Color.BLACK);
+        voterLoginButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
+        voterLoginButton.setBackground(new Color(0x5FFF95));
 
-        add(VoterLoginButton);
-        VoterLoginButton.addActionListener(e -> LoginDatabase());
+        add(voterLoginButton);
+        voterLoginButton.addActionListener(e -> LoginDatabase());
     }
     private void VoterSignupButton() {
         JButton VoterSignupButton = new JButton("নিবন্ধন করুন");
@@ -188,8 +187,8 @@ public class VoterLoginPage extends JFrame {
         String idValue = NidField.getText();
         char[] passwordValue = passwordField.getPassword();
 
-        String idReadSQL = "SELECT NcId FROM nclogin WHERE NcId = ?";
-        String passReadSQL = "SELECT NcPass FROM nclogin WHERE NcPass = ?";
+        String idReadSQL = "SELECT nid FROM voter_signup WHERE nid = ?";
+        String passReadSQL = "SELECT pass FROM voter_signup WHERE pass = ?";
 
         try (PreparedStatement preparedStatementId = connection.prepareStatement(idReadSQL);
              PreparedStatement preparedStatementPass = connection.prepareStatement(passReadSQL)) {

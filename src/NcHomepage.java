@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class NcHomepage extends JFrame {
     private JTextField Address,Name,Nid,MobileNumber,Protik;// need when database connect
-    private JLabel ValidationErrorText, ErrorText;;
+    private JLabel ValidationErrorText, ErrorText;
     private final Font banglaFont = loadBanglaFont(); // Load Bangla font
 
     private Connection connection;
@@ -23,7 +23,7 @@ public class NcHomepage extends JFrame {
         setLocationRelativeTo(null);
         setTitle("বাংলাদেশ নির্বাচন কমিশন");
         getContentPane().setBackground(new Color(0xC4E4DF));
-
+        setVisible(true);//comment this line if you want to run just this page
         ImageIcon MainImage = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/Vote_Box.jpg");
         JLabel Image = new JLabel(MainImage);
         Image.setBounds(23, 62, 263, 237);
@@ -235,10 +235,10 @@ public class NcHomepage extends JFrame {
 
 
     public static void main(String[] args) {
-        //new NcHomepage();//add comment this and above setVisible(true); line - if below line is active
+        new NcHomepage();//add comment this and above setVisible(true); line - if below line is active
 
         //To run this page remove comment
-        NcHomepage frame = new NcHomepage();
-        frame.setVisible(true);
+//        NcHomepage frame = new NcHomepage();
+//        frame.setVisible(true);
     }
 }
