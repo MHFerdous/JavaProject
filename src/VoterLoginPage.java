@@ -205,12 +205,9 @@ public class VoterLoginPage extends JFrame {
                 ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
 
                 // wait for 2 seconds
-                Timer timer = new Timer(2000, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        new VotingPage();
-                        dispose();
-                    }
+                Timer timer = new Timer(2000, e -> {
+                    new VotingPage();
+                    dispose();
                 });
                 timer.setRepeats(false); // execute the action only once
                 timer.start();
