@@ -3,21 +3,21 @@ import java.awt.*;
 import java.sql.*;
 
 
-public class VoterDbConnection {
+public class VoterDbConnection extends Component {
     private Connection connection; // private Statement statement;
-
-    public VoterDbConnection() {
-      try{
-          Class.forName("com.mysql.cj.jdbc.Driver");
-          connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/voter_info","root","");
-          if(connection!=null){
-              System.out.println("Successfully Connected to DB");
-          }
-
-      }catch (ClassNotFoundException | SQLException e) {
-          JOptionPane.showMessageDialog(null, "Error connecting to the database", "Error", JOptionPane.ERROR_MESSAGE);
-          System.exit(1);
-      }
+    public VoterDbConnection(Font banglaFont) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/voter_info", "root", "");
+        } catch (ClassNotFoundException e) {
+            String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি</p></html>";
+            JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
+        } catch (SQLException e) {
+            String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>ডাটাবেসে সংযোগ স্থাপন করা যায়নি</p></html>";
+            JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
+        }
     }
 
     public void VoterSignupDB(String name, String nid, String pass, String email, String mobile, Font banglaFont, JLabel ValidationErrorText ) {

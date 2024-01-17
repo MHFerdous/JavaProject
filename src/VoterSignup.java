@@ -254,7 +254,7 @@ public class VoterSignup extends JFrame {
 
         System.out.println(name+" "+nid+" "+ pass+" "+email+" "+mobile);
 
-        VoterDbConnection dbConnect = new VoterDbConnection();
+        VoterDbConnection dbConnect = new VoterDbConnection(banglaFont);
         dbConnect.VoterSignupDB(name,nid,pass,email,mobile,banglaFont,ValidationErrorText);
         Timer timer = new Timer(2000, e -> {
             new VoterLoginPage();
