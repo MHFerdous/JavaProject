@@ -3,10 +3,10 @@ import java.awt.*;
 import java.sql.*;
 
 
-public class DBConnection {
+public class VoterDbConnection {
     private Connection connection; // private Statement statement;
 
-    public DBConnection() {
+    public VoterDbConnection() {
       try{
           Class.forName("com.mysql.cj.jdbc.Driver");
           connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/voter_info","root","");
