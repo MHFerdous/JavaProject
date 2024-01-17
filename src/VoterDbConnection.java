@@ -37,7 +37,7 @@ public class VoterDbConnection extends Component {
                 ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
 
             } else {
-                ValidationErrorText.setText("ভুল! সঠিক আইডি ও পাসওয়ার্ড দিন");
+                ValidationErrorText.setText("ভুল! ডাটাবেজ সংরক্ষণ হয়নি");
                 ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
             }
 
