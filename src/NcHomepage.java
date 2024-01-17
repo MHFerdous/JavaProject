@@ -78,7 +78,7 @@ public class NcHomepage extends JFrame {
     }
 
     private void textFields() {
-        Name = createTextField("প্রার্থীর সম্পূর্ণ নাম", 63, "^[a-zA-Z ]+|[অ-ঔক-য়\\s]+$","সঠিক নাম বাংলায়/ইংরেজিতে প্রদান করুন");
+        Name = createTextField("প্রার্থীর সম্পূর্ণ নাম.", 63, "^[a-zA-Z ]+|[অ-ঔক-য়\\s]+$","সঠিক নাম বাংলায়/ইংরেজিতে প্রদান করুন");
         Nid = createTextField("প্রার্থীর এন আই ডি নাম্বার", 113, "^[0-9০-৯]{10}$","১০ ডিজিটের জাতীয় পরিচয়পত্র নম্বর দিন");
         Address = createTextField("প্রার্থীর ঠিকানা.", 163, "^[a-zA-Z0-9 ]+|[০-৯অ-ঔক-য়\\s]+$", "সঠিক ঠিকানা প্রদান করুন");
         MobileNumber = createTextField("প্রার্থীর মোবাইল নাম্বার", 213, "^((\\+88)?01[2-9]\\d{8})|((\\+৮৮)?০১[২-৯][০-৯]{8})$","+৮৮০ সহ বা ছাড়া ১১ ডিজিটের নম্বর দিন");
@@ -192,7 +192,9 @@ public class NcHomepage extends JFrame {
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error saving data to the database", "Error", JOptionPane.ERROR_MESSAGE);
+            String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>ভুল! ডাটাবেজ সংরক্ষণ হয়নি</p></html>";
+            JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
         }
     }
 
