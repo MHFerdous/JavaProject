@@ -10,7 +10,6 @@ public class VoterSignup extends JFrame {
     private JTextField nameTxtF,nidTxtF,emailTxtF,mobileTxtF;//need when database connect
     private JLabel ValidationErrorText,ErrText;
     private JPasswordField passwordField;
-   // private DBConnection dbConnect;
 
     private final Font banglaFont = loadBanglaFont();// Load Bangla banglaFont
 
@@ -138,7 +137,7 @@ public class VoterSignup extends JFrame {
         }
     }
     private boolean validatePassField() { // boolean validateAllFields method tone sob abar same pattarn and text catch korsi jate submit button a click korle aye boolen method call hoya check kore sob true ase ni.
-        Pattern check = Pattern.compile("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).{8,}");
+        Pattern check = Pattern.compile("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?!.*[অ-ঔক-য়০-৯]).{8,}");
 
         Matcher matcher = check.matcher(String.valueOf(passwordField.getPassword()));
         if (!matcher.matches()) {
@@ -252,16 +251,22 @@ public class VoterSignup extends JFrame {
         String email = emailTxtF.getText();
         String mobile = mobileTxtF.getText();
 
-        System.out.println(name+" "+nid+" "+ pass+" "+email+" "+mobile);
-
         VoterDbConnection dbConnect = new VoterDbConnection(banglaFont);
-        dbConnect.VoterSignupDB(name,nid,pass,email,mobile,banglaFont,ValidationErrorText);
-        Timer timer = new Timer(2000, e -> {
-            new VoterLoginPage();
-            dispose();
-        });
-        timer.setRepeats(false); // execute the action only once
-        timer.start();
+        if (dbConnect.VoterSignupDB(name,nid,pass,email,mobile)) {
+            ValidationErrorText.setText("তথ্য সংরক্ষণ হয়েছে-একাউন্টে প্রবেশ করুণ");
+            ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
+
+            Timer timer = new Timer(2000, evt -> {
+                new VoterLoginPage();
+                dispose();
+            });
+
+            timer.setRepeats(false);
+            timer.start();
+        } else {
+            ValidationErrorText.setText("দুঃখিত! ডাটাবেজে সংরক্ষণ হয়নি");
+            ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
+        }
 
     }
 

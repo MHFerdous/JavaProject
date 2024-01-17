@@ -183,11 +183,11 @@ public class NcHomepage extends JFrame {
                 int affectedRows = preparedStatement.executeUpdate();
 
                 if (affectedRows > 0) {
-                    ValidationErrorText.setText("ডাটাবেজ সংরক্ষণ হয়েছে");
+                    ValidationErrorText.setText("ডাটাবেজে সংরক্ষণ হয়েছে");
                     ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 16));
 
                 } else {
-                    ValidationErrorText.setText("ডাটাবেজ সংরক্ষণ হয়নি");
+                    ValidationErrorText.setText("ডাটাবেজে সংরক্ষণ হয়নি");
                     ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 16));
                 }
             }

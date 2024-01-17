@@ -20,7 +20,7 @@ public class VoterDbConnection extends Component {
         }
     }
 
-    public void VoterSignupDB(String name, String nid, String pass, String email, String mobile, Font banglaFont, JLabel ValidationErrorText ) {
+    public boolean VoterSignupDB(String name, String nid, String pass, String email, String mobile) {
         try {
             String insertQuery = "INSERT INTO voter_signup VALUES (?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
@@ -32,18 +32,32 @@ public class VoterDbConnection extends Component {
             preparedStatement.setString(5, mobile);
 
             int noOfRows = preparedStatement.executeUpdate();
-            if(noOfRows>0){
-                ValidationErrorText.setText("ডাটাবেজ সংরক্ষণ হয়েছে");
-                ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
+            return noOfRows>0;    // Check if the ResultSet contains any data
 
-            } else {
-                ValidationErrorText.setText("ভুল! ডাটাবেজ সংরক্ষণ হয়নি");
-                ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
-            }
 
         }catch (SQLException exception){
-            ValidationErrorText.setText("কোড এর এস-কিউ-এল ভুল আছে");
-            ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
+            return false;
+        }
+    }
+    boolean voterlogin(JTextField NidField, JPasswordField passwordField) {
+        String idValue = NidField.getText();
+        char[] passwordValue = passwordField.getPassword();
+
+        String idReadSQL = "SELECT nid FROM voter_signup WHERE nid = ?";
+        String passReadSQL = "SELECT pass FROM voter_signup WHERE pass = ?";
+
+        try (PreparedStatement preparedStatementId = connection.prepareStatement(idReadSQL);
+             PreparedStatement preparedStatementPass = connection.prepareStatement(passReadSQL)) {
+
+            preparedStatementId.setString(1, idValue);
+            preparedStatementPass.setString(1, String.valueOf(passwordValue));
+
+            ResultSet resultSetId = preparedStatementId.executeQuery();
+            ResultSet resultSetPass = preparedStatementPass.executeQuery();
+
+            return resultSetId.next() && resultSetPass.next();    // Check if the ResultSet contains any data
+        } catch (SQLException exception) {
+            return false;
         }
     }
 
