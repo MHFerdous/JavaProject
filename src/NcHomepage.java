@@ -1,6 +1,3 @@
-// chnage this a validation pattar use koris sobti
-// then if else use koris jodi validation na hoy taile jate vul ta database a na jay.
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
