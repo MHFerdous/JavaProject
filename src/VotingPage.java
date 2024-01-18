@@ -5,14 +5,19 @@ import java.io.*;
 import java.sql.*;
 
 public class VotingPage extends JFrame {
-    private final Font banglaFont = loadBanglaFont(); // Load Bangla banglaFont
+    private final Font banglaFont = loadBanglaFont();
+    private JTable table;
+    private  Connection connection;
+    private boolean VoteDone = false;
+    private JButton VoteDeleteButton;
+    private JLabel messageShow;
 
 
     public VotingPage(){
         setLayout(null);
         setSize(612, 400);
         setResizable(false);
-        setVisible(true);
+        //setVisible(true);
         setTitle("ভোট প্রদান");
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(0xFFFFFF));
@@ -23,6 +28,7 @@ public class VotingPage extends JFrame {
         SignOutButton();
         voteButton();
         VoteDeleteButton();
+        messageLable();
     }
 
     private void setImages() {
@@ -47,7 +53,7 @@ public class VotingPage extends JFrame {
     private void HeadingText(){
 
         JPanel panel = new JPanel();
-        panel.setBounds(165, 26, 270, 32);
+        panel.setBounds(165, 42, 270, 32);
         panel.setBackground(new Color(0x9CB2FF));
         add(panel);
 
@@ -59,14 +65,15 @@ public class VotingPage extends JFrame {
     }
 
     private void TableField() {
-        JTable table = new JTable();
+        table = new JTable();
         table.setSelectionBackground(Color.green);
-        table.setFont(banglaFont.deriveFont(Font.BOLD,14));
-        table.setBackground(new Color(0xC4E4DF));
-        table.setRowHeight(24);
+        table.setFont(banglaFont.deriveFont(Font.BOLD,16));
+        table.setBackground(new Color(0x057B61));
+        table.setForeground(Color.white);
+        table.setRowHeight(20);
 
         JScrollPane scroll = new JScrollPane(table);
-        scroll.setBounds(112,70,380,215);
+        scroll.setBounds(112,85,400,215);
         add(scroll);
 
         JTableHeader header = table.getTableHeader();
@@ -81,7 +88,7 @@ public class VotingPage extends JFrame {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/nirbacon_commission", "root", "");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/nirbacon_commission", "root", "");
             PreparedStatement statement = connection.prepareStatement(fetchQuery);
 
             ResultSet resultSet = statement.executeQuery();
@@ -97,11 +104,11 @@ public class VotingPage extends JFrame {
 
         } catch (ClassNotFoundException e) {
             String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "ত্রুটি no", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, message, "ত্রুটি,মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         } catch (Exception e) {
             String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>ডাটাবেসে সংযোগ স্থাপন করা যায়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "ত্রুটি ok", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, message, "ত্রুটি,ডাটাবেসে সংযোগ স্থাপন করা যায়নি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
 
@@ -124,43 +131,113 @@ public class VotingPage extends JFrame {
         add(SignOutButton);
     }
 
+    private void TableSelectAndVote() {
+        if (VoteDone) {
+            messageShow.setText("আপনি একবার ভোট দিয়েছেন");
+            messageShow.setFont(banglaFont.deriveFont(Font.BOLD, 25));
+            messageShow.setBounds(183, 4, 300, 32);
+            messageShow.setForeground(Color.red);
+            return; // Exit the method if the user give vote already
+        }
+
+        int selectedRow = table.getSelectedRow();
+        TableModel model = table.getModel();
+        String candidateName = model.getValueAt(selectedRow, 0).toString();
+
+        String voteQuery = "UPDATE nchome SET VoteCount = IFNULL(VoteCount, 0) + 1 WHERE Prarthi_Name = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(voteQuery);
+            statement.setString(1, candidateName);
+            int updatedRows = statement.executeUpdate();
+
+            if (updatedRows > 0) {
+                messageShow.setText("আপনার ভোট প্রদান সম্পূর্ণ হয়েছে");
+                messageShow.setFont(banglaFont.deriveFont(Font.BOLD, 25));
+                messageShow.setForeground(new Color(0x045703));
+                messageShow.setBounds(168, 4, 300, 32);
+                VoteDone = true;
+            } else {
+                messageShow.setText("দুঃখিত! প্রার্থী বাছাই করে পুনরায় ভোট বাটনে চাপ দিন");
+                messageShow.setFont(banglaFont.deriveFont(Font.BOLD, 25));
+            }
+
+        } catch (SQLException exception) {
+            System.out.println("Error updating vote count: " + exception.getMessage());
+        }
+    }
+
+    private void TableSelectAndVoteDelete( ) {
+
+        int selectedRow = table.getSelectedRow();
+        TableModel model = table.getModel();
+        String candidateName = model.getValueAt(selectedRow, 0).toString();
+
+        String voteQuery = "UPDATE nchome SET VoteCount = IFNULL(VoteCount, 0) - 1 WHERE Prarthi_Name = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(voteQuery);
+            statement.setString(1, candidateName);
+            int updatedRows = statement.executeUpdate();
+
+            if (updatedRows > 0) {
+                messageShow.setText("আপনার ভোট বাতিল হয়েছে, আবার ভোট দিন");
+                messageShow.setFont(banglaFont.deriveFont(Font.BOLD, 25));
+                messageShow.setForeground(Color.red);
+                messageShow.setBounds(120, 4, 370, 32);
+                VoteDone = false;
+            } else {
+                messageShow.setText("প্রার্থী কখুঁজে পাওয়া যায়নি");
+                messageShow.setFont(banglaFont.deriveFont(Font.BOLD, 25));
+                messageShow.setForeground(Color.red);
+            }
+
+        } catch (SQLException exception) {
+            messageShow.setText("আপনার ভোট বাতিল হয়েছে, আবার ভোট দিন");
+            messageShow.setFont(banglaFont.deriveFont(Font.BOLD, 20));
+        }
+    }
+
+
     private void voteButton() {
         JButton voteButton = new JButton("ভোট দিন");
-        voteButton.setBounds(142, 300, 149, 42);
+        voteButton.setBounds(142, 308, 149, 42);
         voteButton.setForeground(Color.WHITE);
         voteButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
         voteButton.setBackground(new Color(0x045703));
 
         voteButton.addActionListener(e -> {
-
-            //catch database that table row or colum and count++
-
+                TableSelectAndVote();
+                VoteDeleteButton.setVisible(true);
         });
-
 
         add(voteButton);
     }
+
     private void VoteDeleteButton() {
-        JButton VoteDeleteButton = new JButton("বাতিল");
-        VoteDeleteButton.setBounds(320, 300, 149, 42);
+        VoteDeleteButton = new JButton("বাতিল করুন");
+        VoteDeleteButton.setBounds(320, 308, 149, 42);
         VoteDeleteButton.setForeground(Color.WHITE);
         VoteDeleteButton.setFont(banglaFont.deriveFont(Font.BOLD, 20));
         VoteDeleteButton.setBackground(new Color(0xFF1B1B));
+        VoteDeleteButton.setVisible(false);
 
-        VoteDeleteButton.addActionListener(e -> {
-
-            //catch database and delete the table
-
+        VoteDeleteButton.addActionListener(e-> {
+            TableSelectAndVoteDelete();
+            VoteDeleteButton.setVisible(false);
         });
 
         add(VoteDeleteButton);
     }
 
+    private void messageLable(){
+        messageShow = new JLabel("দুঃখিত! প্রার্থী বাছাই করে পুনরায় ভোট বাটনে চাপ দিন");
+        add(messageShow);
+    }
+
     public static void main(String[] args) {
-       new VotingPage(); //add comment this and above setVisible(true); line - if below line is active
+       //new VotingPage(); //add comment this and above setVisible(true); line - if below line is active
 
         //To run this page remove comment
-//        VotingPage frame = new VotingPage();
-//        frame.setVisible(true);
+        VotingPage frame = new VotingPage();
+        frame.setVisible(true);
     }
 }
