@@ -205,8 +205,16 @@ public class VotingPage extends JFrame {
         voteButton.setBackground(new Color(0x045703));
 
         voteButton.addActionListener(e -> {
+            if(table.getSelectedRow() != -1) {
                 TableSelectAndVote();
                 VoteDeleteButton.setVisible(true);
+            }
+            else {
+                messageShow.setText("আগে প্রার্থী বাছাই করুন");
+                messageShow.setFont(banglaFont.deriveFont(Font.BOLD, 25));
+                messageShow.setForeground(Color.red);
+                messageShow.setBounds(210, 4, 370, 32);
+            }
         });
 
         add(voteButton);
