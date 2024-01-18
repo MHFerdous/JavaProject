@@ -237,7 +237,7 @@ public class VotingPage extends JFrame {
     }
 
     private void messageLable(){
-        messageShow = new JLabel("দুঃখিত! প্রার্থী বাছাই করে পুনরায় ভোট বাটনে চাপ দিন");
+        messageShow = new JLabel();
         add(messageShow);
     }
 
