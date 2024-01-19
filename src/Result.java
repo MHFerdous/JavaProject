@@ -1,7 +1,5 @@
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
+import javax.swing.table.*;
 import java.awt.*;
 import java.io.*;
 import java.sql.*;
@@ -44,11 +42,11 @@ public class Result extends JFrame {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/nirbacon_commission", "root", "");
         }catch (ClassNotFoundException e) {
             String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, message, "্রাইভার ত্রুটি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>ডাটাবেসে সংযোগ স্থাপন করা যায়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, message, "ডাটাবেসে ত্রুটি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
 
@@ -66,7 +64,7 @@ public class Result extends JFrame {
                 winnerText.setText("কোনো বিজয়ী পাওয়া যায়নি");
             }
         } catch (SQLException e) {
-            winnerText.setText("বিজয়ী তথ্য পড়ে না");
+            winnerText.setText("কোনো বিজয়ী পাওয়া যায়নি");
         }
 
 

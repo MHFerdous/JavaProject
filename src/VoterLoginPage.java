@@ -61,7 +61,6 @@ public class VoterLoginPage extends JFrame {
     }
 
     private void addTextFields() {
-        // First text field
         NidField = new JTextField();
         IdHintText(NidField);
         NidField.setBounds(340, 131, 227, 37);
@@ -80,7 +79,7 @@ public class VoterLoginPage extends JFrame {
                 Pattern check = Pattern.compile(PATTERN);
                 Matcher matcher = check.matcher(NidField.getText());
                 if (!matcher.matches()) {
-                    ValidationErrorText.setText("সংখ্যা লিখুন");
+                    ValidationErrorText.setText("সংখ্যায় লিখুন");
                     ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 16));
                 } else {
                     ValidationErrorText.setText(null);

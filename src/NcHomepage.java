@@ -44,11 +44,11 @@ public class NcHomepage extends JFrame {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/nirbacon_commission", "root", "");
         } catch (ClassNotFoundException e) {
             String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, message, "্রাইভার ত্রুটি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>ডাটাবেসে সংযোগ স্থাপন করা যায়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, message, "ডাটাবেসে ত্রুটি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
     }
@@ -190,7 +190,7 @@ public class NcHomepage extends JFrame {
             }
         } catch (SQLException e) {
             String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>ভুল! ডাটাবেজ সংরক্ষণ হয়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, message, "ডাটাবেজ ত্রুটি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
     }

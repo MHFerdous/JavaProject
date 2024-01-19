@@ -17,7 +17,7 @@ public class VotingPage extends JFrame {
         setLayout(null);
         setSize(612, 400);
         setResizable(false);
-        //setVisible(true);
+        setVisible(true);
         setTitle("ভোট প্রদান");
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(0xFFFFFF));
@@ -104,11 +104,11 @@ public class VotingPage extends JFrame {
 
         } catch (ClassNotFoundException e) {
             String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "ত্রুটি,মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, message, "্রাইভার ত্রুটি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         } catch (Exception e) {
             String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>ডাটাবেসে সংযোগ স্থাপন করা যায়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "ত্রুটি,ডাটাবেসে সংযোগ স্থাপন করা যায়নি", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, message, "ডাটাবেসে ত্রুটি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
 
@@ -242,10 +242,10 @@ public class VotingPage extends JFrame {
     }
 
     public static void main(String[] args) {
-       //new VotingPage(); //add comment this and above setVisible(true); line - if below line is active
+       new VotingPage(); //add comment this and above setVisible(true); line - if below line is active
 
         //To run this page remove comment
-        VotingPage frame = new VotingPage();
-        frame.setVisible(true);
+//        VotingPage frame = new VotingPage();
+//        frame.setVisible(true);
     }
 }
