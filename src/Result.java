@@ -1,4 +1,7 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.io.*;
 import java.sql.*;
@@ -32,73 +35,13 @@ public class Result extends JFrame {
     }
     private void WinnerText() {
         JLabel winnerText = new JLabel();
-        winnerText.setFont(banglaFont.deriveFont(Font.BOLD, 30));
+        winnerText.setFont(banglaFont.deriveFont(Font.BOLD, 20));
         winnerText.setForeground(Color.black);
-        winnerText.setBounds(40, 10, 500, 40);
+        winnerText.setBounds(100, 55, 500, 40);
         add(winnerText);
-
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/result", "root", "");
-        } catch (ClassNotFoundException e) {
-            String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
-            System.exit(1);
-        } catch (SQLException e) {
-            String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>ডাটাবেসে সংযোগ স্থাপন করা যায়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
-            System.exit(1);
-        }
-
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT Winner FROM allresult");
-
-
-
-            if (resultSet.next()) {
-                String winnerName = resultSet.getString("Winner");
-                winnerText.setText(winnerName);
-            } else if (resultSet.next()) {
-                winnerText.setText("কোনো বিজয়ী পাওয়া যায়নি");
-            }
-        } catch (SQLException e) {
-            winnerText.setText("বিজয়ী তথ্য পড়ে না");
-        }
-
-    }
-    private void BijoyiText() {
-        JPanel jPanel = new JPanel();
-        jPanel.setBounds(270, 50, 86, 40);
-        jPanel.setBackground(Color.red);
-        add(jPanel);
-        JLabel BijoyiText = new JLabel("বিজয়ী");
-        BijoyiText.setForeground(Color.WHITE);
-        BijoyiText.setFont(banglaFont.deriveFont(Font.BOLD, 35));
-        jPanel.add(BijoyiText);
-    }
-    private void OtherResultHeadline(){
-
-        JPanel jPanel = new JPanel();
-        jPanel.setBounds(240, 105, 150, 30);
-        jPanel.setBackground(new Color(0x9CB2FF));
-        add(jPanel);
-        JLabel label1 = new JLabel("অন্যান্য প্রার্থীর ফলাফল");
-        label1.setFont(banglaFont.deriveFont(Font.BOLD, 18));
-        label1.setForeground(Color.black);
-        jPanel.add(label1);
-    }
-    private void displayOtherPrarthiResult() {
-        JTextArea otherPrarthiResultTextArea = new JTextArea("ডাটাবেজ এ ফলাফল প্রকাশিত হয়নি");
-        otherPrarthiResultTextArea.setBounds(170, 145, 270, 100);
-        otherPrarthiResultTextArea.setFont(banglaFont.deriveFont(Font.BOLD, 20));
-        otherPrarthiResultTextArea.setForeground(Color.BLACK);
-        otherPrarthiResultTextArea.setEditable(false);
-        add(otherPrarthiResultTextArea);
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/result", "root", "");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/nirbacon_commission", "root", "");
         }catch (ClassNotFoundException e) {
             String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি</p></html>";
             JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
@@ -111,28 +54,111 @@ public class Result extends JFrame {
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT OtherWin1 FROM allresult");
+            ResultSet resultSet = statement.executeQuery("SELECT Prarthi_Name,Protik,VoteCount FROM nchome ORDER BY VoteCount DESC LIMIT 1");
 
-            StringBuilder resultText = new StringBuilder();
-
-            while (resultSet.next()) {
-                String otherPrarthiName = resultSet.getString("OtherWin1");
-                resultText.append(otherPrarthiName).append("\n");
+            if (resultSet.next()) {
+                String name = resultSet.getString("Prarthi_Name");
+                String protik = resultSet.getString("Protik");
+                String vote = resultSet.getString("VoteCount");
+                String winner = name + " | মার্কা: " + protik +" | প্রাপ্ত ভোট: "+vote;
+                winnerText.setText(winner);
+            } else {
+                winnerText.setText("কোনো বিজয়ী পাওয়া যায়নি");
             }
-            if (!resultText.isEmpty()) {
-                otherPrarthiResultTextArea.setText(resultText.toString());
-            }
-            else {
-                otherPrarthiResultTextArea.setText("ফলাফল প্রকাশিত হয়নি");
-            }
-
         } catch (SQLException e) {
-            String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>" +
-                    "কোডে ভুল আছে।" + "</p></html>";
-            JOptionPane.showMessageDialog(this, message, "ত্রুটি", JOptionPane.ERROR_MESSAGE);
-            System.exit(1);
+            winnerText.setText("বিজয়ী তথ্য পড়ে না");
+        }
+
+
+    }
+    private void BijoyiText() {
+        JPanel jPanel = new JPanel();
+        jPanel.setBounds(270, 5, 86, 40);
+        jPanel.setBackground(Color.red);
+        add(jPanel);
+        JLabel BijoyiText = new JLabel("বিজয়ী");
+        BijoyiText.setForeground(Color.WHITE);
+        BijoyiText.setFont(banglaFont.deriveFont(Font.BOLD, 35));
+        jPanel.add(BijoyiText);
+    }
+    private void OtherResultHeadline(){
+
+        JPanel jPanel = new JPanel();
+        jPanel.setBounds(240, 100, 150, 30);
+        jPanel.setBackground(new Color(0x9CB2FF));
+        add(jPanel);
+        JLabel label1 = new JLabel("অন্যান্য প্রার্থীর ফলাফল");
+        label1.setFont(banglaFont.deriveFont(Font.BOLD, 18));
+        label1.setForeground(Color.black);
+        jPanel.add(label1);
+    }
+    private void displayOtherPrarthiResult() {
+
+        JTable table = new JTable();
+        table.setSelectionBackground(Color.green);
+        table.setFont(banglaFont.deriveFont(Font.BOLD, 18));
+        table.setBackground(new Color(0x057B61));
+        table.setForeground(Color.white);
+        table.setRowHeight(22);
+
+        Object[] column = {"প্রার্থীর নাম", "প্রতীক", "প্রাপ্ত ভোট"};
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(column);
+        table.setModel(model);
+
+        TableColumn column1 = table.getColumnModel().getColumn(0);
+        TableColumn column2 = table.getColumnModel().getColumn(1);
+        TableColumn column3 = table.getColumnModel().getColumn(2);
+        column1.setPreferredWidth(150);
+        column2.setPreferredWidth(40);
+        column3.setPreferredWidth(15);
+
+        JScrollPane scroll = new JScrollPane(table);
+        scroll.setBounds(112, 138, 400, 215);
+        add(scroll);
+
+        JTableHeader header = table.getTableHeader();
+        header.setFont(banglaFont.deriveFont(Font.BOLD, 20));
+
+        JTextArea otherPrarthiResultTextArea = new JTextArea("ডাটাবেজ এ ফলাফল প্রকাশিত হয়নি");
+        otherPrarthiResultTextArea.setBounds(170, 200, 270, 100);
+        otherPrarthiResultTextArea.setFont(banglaFont.deriveFont(Font.BOLD, 20));
+        otherPrarthiResultTextArea.setForeground(Color.BLACK);
+        otherPrarthiResultTextArea.setEditable(false);
+        otherPrarthiResultTextArea.setVisible(false);
+        add(otherPrarthiResultTextArea);
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSetOthers = statement.executeQuery("SELECT Prarthi_Name, Protik, VoteCount FROM nchome ORDER BY VoteCount DESC");
+
+            int rowCount = 0;
+
+            while (resultSetOthers.next()) {
+                rowCount++;
+
+                if (rowCount > 1) {
+                    String name = resultSetOthers.getString("Prarthi_Name");
+                    String protik = resultSetOthers.getString("Protik");
+                    String vote = resultSetOthers.getString("VoteCount");
+                    String[] otherPrarthi = {name, protik, vote};
+                    model.addRow(otherPrarthi);
+                }
+            }
+
+            if (rowCount > 1) {
+                otherPrarthiResultTextArea.setVisible(false);
+                table.setVisible(true);
+            } else {
+                otherPrarthiResultTextArea.setVisible(true);
+                table.setVisible(false);
+            }
+        } catch (SQLException e) {
+            otherPrarthiResultTextArea.setText("কোডে ভুল আছে।");
         }
     }
+
+
     private void HomeButton() {
         JButton HomeButton = new JButton(new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/home-icon.jpg"));
         HomeButton.setBounds(570, 5, 20, 20);
@@ -145,7 +171,7 @@ public class Result extends JFrame {
 
     private void Logo() {
         JLabel Logo = new JLabel(new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/nirbacon_commison_logo.png"));
-        Logo.setBounds(43, 50, 100, 100);
+        Logo.setBounds(0, 0, 100, 100);
         add(Logo);
     }
     public static void main(String[] args) throws SQLException {
