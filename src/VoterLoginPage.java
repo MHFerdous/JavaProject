@@ -75,11 +75,11 @@ public class VoterLoginPage extends JFrame {
         NidField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                String PATTERN = "[০-৯0-9]+";
+                String PATTERN = "[০-৯0-9]{10}";
                 Pattern check = Pattern.compile(PATTERN);
                 Matcher matcher = check.matcher(NidField.getText());
                 if (!matcher.matches()) {
-                    ValidationErrorText.setText("সংখ্যায় লিখুন");
+                    ValidationErrorText.setText("১০ ডিজিটের জাতীয় পরিচয়পত্র নম্বর দিন");
                     ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 16));
                 } else {
                     ValidationErrorText.setText(null);

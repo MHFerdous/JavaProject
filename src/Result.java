@@ -33,10 +33,17 @@ public class Result extends JFrame {
     }
     private void WinnerText() {
         JLabel winnerText = new JLabel();
-        winnerText.setFont(banglaFont.deriveFont(Font.BOLD, 20));
+        winnerText.setFont(banglaFont.deriveFont(Font.BOLD, 24));
         winnerText.setForeground(Color.black);
-        winnerText.setBounds(100, 55, 500, 40);
+        winnerText.setBounds(185, 38, 500, 40);
         add(winnerText);
+
+        JLabel winnerDetails = new JLabel();
+        winnerDetails.setFont(banglaFont.deriveFont(Font.BOLD, 20));
+        winnerDetails.setForeground(Color.black);
+        winnerDetails.setForeground(new Color(0x057B61));
+        winnerDetails.setBounds(220, 63, 500, 40);
+        add(winnerDetails);
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/nirbacon_commission", "root", "");
@@ -58,8 +65,9 @@ public class Result extends JFrame {
                 String name = resultSet.getString("Prarthi_Name");
                 String protik = resultSet.getString("Protik");
                 String vote = resultSet.getString("VoteCount");
-                String winner = name + " | মার্কা: " + protik +" | প্রাপ্ত ভোট: "+vote;
-                winnerText.setText(winner);
+                winnerText.setText(name);
+                String DetailsText = " মার্কা: " + protik +" | প্রাপ্ত ভোট: "+vote;
+                winnerDetails.setText(DetailsText);
             } else {
                 winnerText.setText("কোনো বিজয়ী পাওয়া যায়নি");
             }
@@ -71,7 +79,7 @@ public class Result extends JFrame {
     }
     private void BijoyiText() {
         JPanel jPanel = new JPanel();
-        jPanel.setBounds(270, 5, 86, 40);
+        jPanel.setBounds(270, 2, 86, 40);
         jPanel.setBackground(Color.red);
         add(jPanel);
         JLabel BijoyiText = new JLabel("বিজয়ী");
@@ -82,7 +90,7 @@ public class Result extends JFrame {
     private void OtherResultHeadline(){
 
         JPanel jPanel = new JPanel();
-        jPanel.setBounds(240, 100, 150, 30);
+        jPanel.setBounds(240, 98, 150, 30);
         jPanel.setBackground(new Color(0x9CB2FF));
         add(jPanel);
         JLabel label1 = new JLabel("অন্যান্য প্রার্থীর ফলাফল");

@@ -254,6 +254,7 @@ public class VoterSignup extends JFrame {
         VoterDbConnection dbConnect = new VoterDbConnection(banglaFont);
         if (dbConnect.VoterSignupDB(name,nid,pass,email,mobile)) {
             ValidationErrorText.setText("তথ্য সংরক্ষণ হয়েছে-একাউন্টে প্রবেশ করুণ");
+            ValidationErrorText.setBounds(330, 23, 230, 37);
             ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
 
             Timer timer = new Timer(2000, evt -> {
