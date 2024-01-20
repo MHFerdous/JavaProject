@@ -47,6 +47,9 @@ public class VotingPage extends JFrame {
         add(NID);
         NID.setText(("এন আই ডি"));
         NID.setHorizontalAlignment(SwingConstants.CENTER);
+
+        messageShow.setBounds(0, 4, 612, 32);
+        messageShow.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
 
@@ -157,9 +160,8 @@ public class VotingPage extends JFrame {
         if (VoteDone) {
             messageShow.setText("আপনি একবার ভোট দিয়েছেন");
             messageShow.setFont(banglaFont.deriveFont(Font.BOLD, 25));
-            messageShow.setBounds(183, 4, 300, 32);
             messageShow.setForeground(Color.red);
-            return; // Exit the method if the user give vote already
+            return; // Exit if user give vote already
         }
 
         int selectedRow = table.getSelectedRow();
@@ -176,7 +178,6 @@ public class VotingPage extends JFrame {
                 messageShow.setText("আপনার ভোট প্রদান সম্পূর্ণ হয়েছে");
                 messageShow.setFont(banglaFont.deriveFont(Font.BOLD, 25));
                 messageShow.setForeground(new Color(0x045703));
-                messageShow.setBounds(168, 4, 300, 32);
                 VoteDone = true;
             } else {
                 messageShow.setText("দুঃখিত! প্রার্থী বাছাই করে পুনরায় ভোট বাটনে চাপ দিন");
@@ -204,7 +205,6 @@ public class VotingPage extends JFrame {
                 messageShow.setText("আপনার ভোট বাতিল হয়েছে, আবার ভোট দিন");
                 messageShow.setFont(banglaFont.deriveFont(Font.BOLD, 25));
                 messageShow.setForeground(Color.red);
-                messageShow.setBounds(120, 4, 370, 32);
                 VoteDone = false;
             } else {
                 messageShow.setText("প্রার্থী কখুঁজে পাওয়া যায়নি");
@@ -235,7 +235,6 @@ public class VotingPage extends JFrame {
                 messageShow.setText("আগে প্রার্থী বাছাই করুন");
                 messageShow.setFont(banglaFont.deriveFont(Font.BOLD, 25));
                 messageShow.setForeground(Color.red);
-                messageShow.setBounds(210, 4, 370, 32);
             }
         });
 

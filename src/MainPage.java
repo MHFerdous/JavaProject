@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 
-
 public class MainPage extends JFrame {
     private final JRadioButton radioButton1;
     private final JRadioButton radioButton2;
