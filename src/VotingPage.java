@@ -13,7 +13,8 @@ public class VotingPage extends JFrame {
     private JLabel messageShow;
 
 
-    public VotingPage(){
+
+    public VotingPage( String voterNID ){
         setLayout(null);
         setSize(612, 400);
         setResizable(false);
@@ -29,14 +30,23 @@ public class VotingPage extends JFrame {
         voteButton();
         VoteDeleteButton();
         messageLable();
+
+
+        JLabel NIDNum = new JLabel();
+        NIDNum.setBounds(8,130,100,20);
+        NIDNum.setFont(banglaFont.deriveFont(Font.BOLD, 15));
+        NIDNum.setForeground(Color.black);
+        add(NIDNum);
+        NIDNum.setText((voterNID));
+
+        JLabel NID = new JLabel();
+        NID.setBounds(28,110,100,20);
+        NID.setFont(banglaFont.deriveFont(Font.BOLD, 15));
+        NID.setForeground(Color.black);
+        add(NID);
+        NID.setText(("এন আই ডি"));
     }
 
-    public VotingPage(JTextField voterNID) {
-        JLabel NID = new JLabel();
-        NID.setBounds(2,200,100,20);
-        NID.setFont(banglaFont.deriveFont(Font.BOLD, 14));
-        NID.setText(String.valueOf(voterNID));
-    }
 
 
     private void setImages() {
@@ -252,7 +262,7 @@ public class VotingPage extends JFrame {
     }
 
     public static void main(String[] args) {
-       new VotingPage(); //add comment this and above setVisible(true); line - if below line is active
+       //new VotingPage(); //add comment this and above setVisible(true); line - if below line is active
 
         //To run this page remove comment
 //        VotingPage frame = new VotingPage();
