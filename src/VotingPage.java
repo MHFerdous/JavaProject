@@ -31,6 +31,14 @@ public class VotingPage extends JFrame {
         messageLable();
     }
 
+    public VotingPage(JTextField voterNID) {
+        JLabel NID = new JLabel();
+        NID.setBounds(2,200,100,20);
+        NID.setFont(banglaFont.deriveFont(Font.BOLD, 14));
+        NID.setText(String.valueOf(voterNID));
+    }
+
+
     private void setImages() {
         // Add image
         ImageIcon image = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/nirbacon_commison_logo.png");
@@ -103,12 +111,14 @@ public class VotingPage extends JFrame {
             }
 
         } catch (ClassNotFoundException e) {
-            String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "্রাইভার ত্রুটি", JOptionPane.ERROR_MESSAGE);
+            JLabel label = new JLabel("মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি");
+            label.setFont(banglaFont);
+            JOptionPane.showMessageDialog(null, label, "ড্রাইভার ত্রুটি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         } catch (Exception e) {
-            String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>ডাটাবেসে সংযোগ স্থাপন করা যায়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "ডাটাবেসে ত্রুটি", JOptionPane.ERROR_MESSAGE);
+            JLabel label = new JLabel("ডাটাবেসে সংযোগ স্থাপন করা যায়নি");
+            label.setFont(banglaFont);
+            JOptionPane.showMessageDialog(null, label, "ডাটাবেস ত্রুটি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
 

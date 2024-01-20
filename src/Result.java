@@ -48,12 +48,14 @@ public class Result extends JFrame {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/nirbacon_commission", "root", "");
         }catch (ClassNotFoundException e) {
-            String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "্রাইভার ত্রুটি", JOptionPane.ERROR_MESSAGE);
+            JLabel label = new JLabel("মাইএসকুয়েল জেডবিসি ড্রাইভার পাওয়া যায়নি");
+            label.setFont(banglaFont);
+            JOptionPane.showMessageDialog(null, label, "ড্রাইভার ত্রুটি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         } catch (Exception e) {
-            String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>ডাটাবেসে সংযোগ স্থাপন করা যায়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "ডাটাবেসে ত্রুটি", JOptionPane.ERROR_MESSAGE);
+            JLabel label = new JLabel("ডাটাবেসে সংযোগ স্থাপন করা যায়নি");
+            label.setFont(banglaFont);
+            JOptionPane.showMessageDialog(null, label, "ডাটাবেস ত্রুটি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
 

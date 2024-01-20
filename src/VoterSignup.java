@@ -218,7 +218,7 @@ public class VoterSignup extends JFrame {
         add(BackButton);
 
         BackButton.addActionListener(e -> {
-            new MainPage();
+            new VoterLoginPage();
             dispose();
         });
     }

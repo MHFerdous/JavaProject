@@ -160,7 +160,7 @@ public class VoterLoginPage extends JFrame {
                 ValidationErrorText.setFont(banglaFont.deriveFont(Font.BOLD, 17));
 
                 Timer timer = new Timer(2000, evt -> {
-                    new VotingPage();
+                    new VotingPage(NidField);
                     dispose();
                 });
 
