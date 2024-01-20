@@ -22,6 +22,8 @@ public class MainPage extends JFrame {
         JLabel Image = new JLabel(MainImage);
         Image.setBounds(0, 0, 306, 360);
         add(Image);
+        ImageIcon frameIcon = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/nirbacon_commison_logo.png");
+        setIconImage(frameIcon.getImage());
 
         // Add text with radio buttons
         radioButton1 = addTextWithRadioButton("নির্বাচন কমিশন", 127);

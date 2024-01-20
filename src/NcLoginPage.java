@@ -29,10 +29,13 @@ public class NcLoginPage extends JFrame {
         JLabel Image = new JLabel(MainImage);
         Image.setBounds(0, 0, 306, 360);
         add(Image);
+        ImageIcon frameIcon = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/nirbacon_commison_logo.png");
+        setIconImage(frameIcon.getImage());
 
         addTextFields(); // Add text fields
         NcLoginButton();// Add button
         HomeButton();// Add button
+        PuronKorun();
 
         addMouseListener(new java.awt.event.MouseAdapter() {// Request focus for the main panel to start without initial selection
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -70,6 +73,13 @@ public class NcLoginPage extends JFrame {
             frame.setVisible(true);
         });
         add(HomeButton);
+    }
+
+    private  void PuronKorun(){
+        ErrText = new JLabel();
+        add(ErrText);
+        ErrText.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
+        setComponentZOrder(ErrText, 0);
     }
 
     private Font loadBanglaFont() {
@@ -140,6 +150,7 @@ public class NcLoginPage extends JFrame {
                     ErrText.setVisible(false); // Hide ErrorText if there's text
                 }
             }
+
         });
     }
 
@@ -149,6 +160,7 @@ public class NcLoginPage extends JFrame {
         textField.setFont(banglaFont);
         textField.addFocusListener(new FocusAdapter() {
             @Override
+
             public void focusGained(FocusEvent e) {
                 if (textField.getText().equals("নির্বাচন কমিশন আই ডি দিন")) {
                     textField.setText("");

@@ -22,6 +22,8 @@ public class Result extends JFrame {
         Logo();
         OtherResultHeadline();
         displayOtherPrarthiResult();
+        ImageIcon frameIcon = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/nirbacon_commison_logo.png");
+        setIconImage(frameIcon.getImage());
 
     }
     private Font loadBanglaFont() {
@@ -35,14 +37,15 @@ public class Result extends JFrame {
         JLabel winnerText = new JLabel();
         winnerText.setFont(banglaFont.deriveFont(Font.BOLD, 24));
         winnerText.setForeground(Color.black);
-        winnerText.setBounds(185, 38, 500, 40);
+        winnerText.setBounds(0, 38, 612, 40);
+        winnerText.setHorizontalAlignment(SwingConstants.CENTER);
         add(winnerText);
 
         JLabel winnerDetails = new JLabel();
         winnerDetails.setFont(banglaFont.deriveFont(Font.BOLD, 20));
-        winnerDetails.setForeground(Color.black);
         winnerDetails.setForeground(new Color(0x057B61));
-        winnerDetails.setBounds(220, 63, 500, 40);
+        winnerDetails.setBounds(0, 63, 612, 40);
+        winnerDetails.setHorizontalAlignment(SwingConstants.CENTER);
         add(winnerDetails);
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

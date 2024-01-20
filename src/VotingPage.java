@@ -33,18 +33,20 @@ public class VotingPage extends JFrame {
 
 
         JLabel NIDNum = new JLabel();
-        NIDNum.setBounds(8,130,100,20);
+        NIDNum.setBounds(0,130,112,20);
         NIDNum.setFont(banglaFont.deriveFont(Font.BOLD, 15));
         NIDNum.setForeground(Color.black);
         add(NIDNum);
         NIDNum.setText((voterNID));
+        NIDNum.setHorizontalAlignment(SwingConstants.CENTER);
 
         JLabel NID = new JLabel();
-        NID.setBounds(28,110,100,20);
+        NID.setBounds(0,110,112,20);
         NID.setFont(banglaFont.deriveFont(Font.BOLD, 15));
         NID.setForeground(Color.black);
         add(NID);
         NID.setText(("এন আই ডি"));
+        NID.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
 

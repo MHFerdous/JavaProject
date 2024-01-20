@@ -25,6 +25,8 @@ public class NcHomepage extends JFrame {
         JLabel Image = new JLabel(MainImage);
         Image.setBounds(23, 62, 263, 237);
         add(Image);
+        ImageIcon frameIcon = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/nirbacon_commison_logo.png");
+        setIconImage(frameIcon.getImage());
 
         HomeButton();
         SubmitButton();

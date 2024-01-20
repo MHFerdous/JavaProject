@@ -25,6 +25,8 @@ public class VoterLoginPage extends JFrame {
         JLabel Image = new JLabel(MainImage);
         Image.setBounds(0, 0, 306, 360);
         add(Image);
+        ImageIcon frameIcon = new ImageIcon("/Users/hrkja/OneDrive/Desktop/evmProject/img/nirbacon_commison_logo.png");
+        setIconImage(frameIcon.getImage());
 
         addTextFields(); // Add text fields
         VoterLoginButton();// Add button
