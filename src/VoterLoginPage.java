@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class VoterLoginPage extends JFrame {
     private JPasswordField passwordField;
     private JTextField NidField;
-    private JLabel ValidationErrorText;
+    private JLabel ValidationErrorText,ErrText;
     private final Font banglaFont = loadBanglaFont(); // Load Bangla banglaFont
     public VoterLoginPage() {
         setLayout(null);
@@ -100,16 +100,24 @@ public class VoterLoginPage extends JFrame {
                     passwordField.setText("");
                     passwordField.setEchoChar('*');
                     passwordField.setForeground(Color.BLACK);
-                    passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
                 }
+                ErrText.setText("");
             }
             @Override
             public void focusLost(FocusEvent e) {
+                ErrText = new JLabel("পূরণ করুন");
+                ErrText.setBounds(510, 212, 227, 37);
+                add(ErrText);
+                ErrText.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
+                setComponentZOrder(ErrText, 0);
                 if (String.valueOf(passwordField.getPassword()).isEmpty()) {
                     passwordField.setText("পাসওয়ার্ড দিন");
                     passwordField.setEchoChar((char) 0);
-                    passwordField.setForeground(Color.GRAY);
-                    passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
+                    passwordField.setForeground(Color.gray);
+                    ErrText.setForeground(Color.RED);
+
+                }else {
+                    ErrText.setVisible(false); // Hide ErrorText if there's text
                 }
             }
         });
@@ -126,15 +134,23 @@ public class VoterLoginPage extends JFrame {
                 if (textField.getText().equals("এন আই ডি নাম্বার দিন")) {
                     textField.setText("");
                     textField.setForeground(Color.BLACK);
-                    passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
                 }
+                ErrText.setText("");
             }
             @Override
             public void focusLost(FocusEvent e) {
+                ErrText = new JLabel("পূরণ করুন");
+                ErrText.setBounds(510, 162, 227, 37);
+                add(ErrText);
+                ErrText.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
+                setComponentZOrder(ErrText, 0);
                 if (textField.getText().isEmpty()) {
                     textField.setText("এন আই ডি নাম্বার দিন");
                     textField.setForeground(Color.GRAY);
-                    passwordField.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
+                    ErrText.setForeground(Color.RED);
+                }
+                else {
+                    ErrText.setVisible(false); // Hide ErrorText if there's text
                 }
             }
         });

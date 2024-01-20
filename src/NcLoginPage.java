@@ -10,7 +10,7 @@ public class NcLoginPage extends JFrame {
 
     private JPasswordField passwordField;
     private JTextField idField;
-    private JLabel ValidationErrorText;
+    private JLabel ValidationErrorText, ErrText;
     private Connection connection;
     private final Font banglaFont = loadBanglaFont(); // Load Bangla banglaFont
 
@@ -109,7 +109,7 @@ public class NcLoginPage extends JFrame {
 
         // Password text field
         passwordField = new JPasswordField();
-        passwordField.setBounds(340, 181, 227, 37);
+        passwordField.setBounds(340, 180, 227, 37);
         passwordField.setBackground(new Color(0xD9D9D9));
         PasswordHintText(passwordField);
         add(passwordField);
@@ -121,36 +121,55 @@ public class NcLoginPage extends JFrame {
                     passwordField.setEchoChar('*');
                     passwordField.setForeground(Color.BLACK);
                 }
+                ErrText.setText("");
             }
             @Override
             public void focusLost(FocusEvent e) {
+                ErrText = new JLabel("পূরণ করুন");
+                ErrText.setBounds(510, 212, 227, 37);
+                add(ErrText);
+                ErrText.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
+                setComponentZOrder(ErrText, 0);
                 if (String.valueOf(passwordField.getPassword()).isEmpty()) {
                     passwordField.setText("পাসওয়ার্ড দিন");
                     passwordField.setEchoChar((char) 0);
                     passwordField.setForeground(Color.gray);
+                    ErrText.setForeground(Color.RED);
 
+                }else {
+                    ErrText.setVisible(false); // Hide ErrorText if there's text
                 }
             }
         });
     }
 
     private void IdHintText(JTextField textField) {
-        textField.setText("নির্বাচন কমিশন আই ডি নাম্বার দিন");
+        textField.setText("নির্বাচন কমিশন আই ডি দিন");
         textField.setForeground(Color.GRAY);
         textField.setFont(banglaFont);
         textField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (textField.getText().equals("নির্বাচন কমিশন আই ডি নাম্বার দিন")) {
+                if (textField.getText().equals("নির্বাচন কমিশন আই ডি দিন")) {
                     textField.setText("");
                     textField.setForeground(Color.BLACK);
                 }
+                ErrText.setText("");
             }
             @Override
             public void focusLost(FocusEvent e) {
+                ErrText = new JLabel("পূরণ করুন");
+                ErrText.setBounds(510, 162, 227, 37);
+                add(ErrText);
+                ErrText.setFont(banglaFont.deriveFont(Font.PLAIN, 17));
+                setComponentZOrder(ErrText, 0);
                 if (textField.getText().isEmpty()) {
-                    textField.setText("নির্বাচন কমিশন আই ডি নাম্বার দিন");
+                    textField.setText("নির্বাচন কমিশন আই ডি দিন");
                     textField.setForeground(Color.GRAY);
+                    ErrText.setForeground(Color.RED);
+                }
+                else {
+                    ErrText.setVisible(false); // Hide ErrorText if there's text
                 }
             }
         });
