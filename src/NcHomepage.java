@@ -34,6 +34,7 @@ public class NcHomepage extends JFrame {
         textFields();
         HeadingText();
         ValidationErrorText();
+        Poriborton();
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked();
@@ -191,8 +192,9 @@ public class NcHomepage extends JFrame {
                 }
             }
         } catch (SQLException e) {
-            String message = "<html><p style='font-family: " + banglaFont.getFontName() + "; font-size: 17pt;'>ভুল! ডাটাবেজ সংরক্ষণ হয়নি</p></html>";
-            JOptionPane.showMessageDialog(this, message, "ডাটাবেজ ত্রুটি", JOptionPane.ERROR_MESSAGE);
+            JLabel label = new JLabel("ভুল! ডাটাবেজ সংরক্ষণ হয়নি");
+            label.setFont(banglaFont);
+            JOptionPane.showMessageDialog(null, label, "ডাটাবেস ত্রুটি", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
     }
@@ -237,6 +239,20 @@ public class NcHomepage extends JFrame {
         ValidationErrorText.setBounds(312, 35, 227, 37);
         add(ValidationErrorText);
         ValidationErrorText.setForeground(Color.RED);
+    }
+    private void Poriborton() {
+        JButton backButton = new JButton("পরিবর্তন");
+        backButton.setBounds(520, 8, 70, 35);
+        backButton.setForeground(Color.black);
+        backButton.setFont(banglaFont.deriveFont(Font.BOLD, 10));
+        backButton.setBackground(Color.GREEN);
+
+        backButton.addActionListener(e -> {
+            new NcDatabase();
+            dispose();
+        });
+
+        add(backButton);
     }
 
 
